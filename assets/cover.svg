@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2400" viewBox="0 0 1600 2400" role="img" aria-labelledby="title desc">
+  <title id="title">Inference Engineering book cover</title>
+  <desc id="desc">A modern technical book cover showing the inference stack from data center infrastructure through accelerators, kernels, model mechanics, serving runtimes, and production operations.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101522"/>
+      <stop offset="0.42" stop-color="#172033"/>
+      <stop offset="1" stop-color="#0b0f18"/>
+    </linearGradient>
+    <linearGradient id="bandA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="bandB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <linearGradient id="bandC" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.055"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="2400" fill="url(#bg)"/>
+  <rect width="1600" height="2400" fill="url(#grid)"/>
+
+  <g opacity="0.18">
+    <path d="M-80 520 C260 410 510 430 780 525 C1040 616 1290 620 1680 480" fill="none" stroke="#38bdf8" stroke-width="4"/>
+    <path d="M-80 620 C260 510 510 530 780 625 C1040 716 1290 720 1680 580" fill="none" stroke="#6ee7b7" stroke-width="3"/>
+    <path d="M-80 720 C260 610 510 630 780 725 C1040 816 1290 820 1680 680" fill="none" stroke="#f59e0b" stroke-width="3"/>
+  </g>
+
+  <text x="132" y="196" fill="#9fb3c8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="42" letter-spacing="8">SYSTEMS BOOK</text>
+  <text x="128" y="390" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="138" font-weight="800">
+    <tspan x="128" dy="0">Inference</tspan>
+    <tspan x="128" dy="150">Engineering</tspan>
+  </text>
+  <text x="132" y="740" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="48">
+    <tspan x="132" dy="0">From data center design to</tspan>
+    <tspan x="132" dy="70">production LLM systems</tspan>
+  </text>
+
+  <g transform="translate(132 950)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="1336" height="850" rx="38" fill="#111827" stroke="#334155" stroke-width="2"/>
+    <g transform="translate(70 72)">
+      <rect x="0" y="0" width="1196" height="106" rx="22" fill="#182235" stroke="#334155"/>
+      <rect x="26" y="27" width="170" height="52" rx="12" fill="url(#bandA)"/>
+      <text x="230" y="67" fill="#e5edf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="700">Power / Cooling / Racks / Network</text>
+
+      <rect x="0" y="142" width="1196" height="106" rx="22" fill="#182235" stroke="#334155"/>
+      <rect x="26" y="169" width="170" height="52" rx="12" fill="url(#bandB)"/>
+      <text x="230" y="209" fill="#e5edf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="700">CPU / GPU / HBM / NIC / Topology</text>
+
+      <rect x="0" y="284" width="1196" height="106" rx="22" fill="#182235" stroke="#334155"/>
+      <rect x="26" y="311" width="170" height="52" rx="12" fill="url(#bandC)"/>
+      <text x="230" y="351" fill="#e5edf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="700">Attention / KV Cache / MoE / Decode</text>
+
+      <rect x="0" y="426" width="1196" height="106" rx="22" fill="#182235" stroke="#334155"/>
+      <rect x="26" y="453" width="170" height="52" rx="12" fill="url(#bandA)"/>
+      <text x="230" y="493" fill="#e5edf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="700">Kernels / Compilers / Runtimes</text>
+
+      <rect x="0" y="568" width="1196" height="106" rx="22" fill="#182235" stroke="#334155"/>
+      <rect x="26" y="595" width="170" height="52" rx="12" fill="url(#bandB)"/>
+      <text x="230" y="635" fill="#e5edf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="700">vLLM / Runpod / Benchmarks / SLOs</text>
+
+      <g stroke="#64748b" stroke-width="6" stroke-linecap="round" opacity="0.9">
+        <path d="M598 106v36"/>
+        <path d="M598 248v36"/>
+        <path d="M598 390v36"/>
+        <path d="M598 532v36"/>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(132 1920)">
+    <rect x="0" y="0" width="390" height="118" rx="24" fill="#0f172a" stroke="#334155"/>
+    <text x="36" y="50" fill="#94a3b8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28">Latency</text>
+    <text x="36" y="88" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="800">TTFT / ITL / TTL</text>
+
+    <rect x="472" y="0" width="390" height="118" rx="24" fill="#0f172a" stroke="#334155"/>
+    <text x="508" y="50" fill="#94a3b8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28">Throughput</text>
+    <text x="508" y="88" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="800">tokens / second</text>
+
+    <rect x="944" y="0" width="390" height="118" rx="24" fill="#0f172a" stroke="#334155"/>
+    <text x="980" y="50" fill="#94a3b8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28">Control</text>
+    <text x="980" y="88" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="34" font-weight="800">evals / cost / ops</text>
+  </g>
+
+  <text x="132" y="2250" fill="#e2e8f0" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="44" font-weight="700">Ozgur Guler</text>
+</svg>

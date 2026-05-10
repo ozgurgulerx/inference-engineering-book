@@ -1,0 +1,1469 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Inference Engineering",
+    "section": "",
+    "text": "1 Preface\nThis book takes a stack-first view. It starts with the physical data center, moves through hardware and model mechanics, then reaches kernels, serving frameworks, advanced architectures, and production operations.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#reader",
+    "href": "index.html#reader",
+    "title": "Inference Engineering",
+    "section": "1.1 Reader",
+    "text": "1.1 Reader\nThis book is for engineers, platform teams, applied AI builders, and technical leaders who need to operate LLM-backed systems in production.\nThe reader should be comfortable reading code, system diagrams, benchmark tables, and architecture notes. Prior experience with distributed systems, APIs, or machine learning helps, but the book should make each inference-specific concept explicit.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#book-promise",
+    "href": "index.html#book-promise",
+    "title": "Inference Engineering",
+    "section": "1.2 Book Promise",
+    "text": "1.2 Book Promise\nBy the end, a reader should be able to:\n\nCompare AI data center design choices across power, cooling, racks, networks, storage, and operations.\nExplain how CPU, GPU, accelerator, memory, and network architecture affect inference performance.\nBuild a metric system for latency, throughput, cost, quality, and reliability.\nUnderstand why attention, KV cache, long context, MoE, and RL-style workloads change serving behavior.\nRead kernel and compiler optimization claims without getting lost.\nDeploy and benchmark vLLM on an on-demand GPU environment such as Runpod.\nEvaluate speculative decoding, disaggregated inference, and specialized systems such as SambaNova, Cerebras, and Groq.\nOperate inference systems with evals, observability, reliability, security, and cost controls.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-read",
+    "href": "index.html#how-to-read",
+    "title": "Inference Engineering",
+    "section": "1.3 How to Read",
+    "text": "1.3 How to Read\nThe chapters are organized in seven layers:\n\nAI data center design.\nSilicon, nodes, and hardware architecture.\nModel mechanics that matter for inference.\nKernels, compilers, and runtime primitives.\nFramework-first implementation.\nAdvanced inference architectures.\nProduction inference engineering.\n\nEach chapter should eventually include:\n\nA concrete system, failure mode, benchmark, or decision.\nThe core mental model.\nImplementation notes.\nA lab, artifact, or checklist.\nWhat to measure.\nWhat can go wrong.\n\nThe goal is a book that progresses cleanly from physical constraints to operational judgment.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-executive-map.html",
+    "href": "chapters/01-executive-map.html",
+    "title": "2  Executive Map",
+    "section": "",
+    "text": "2.1 The Stack\nThe book follows one system from the ground up: the data center that powers the cluster, the node that runs the model, the accelerator that executes kernels, the runtime that schedules tokens, and the product service that turns those tokens into a reliable user experience.\nflowchart TB\n  A[Power, cooling, and facility constraints]\n  B[Racks, clusters, and data center network]\n  C[CPU, memory, PCIe, GPU, accelerator, and NIC]\n  D[Kernels, compilers, runtimes, and serving engines]\n  E[Model mechanics: attention, KV cache, MoE, decoding]\n  F[Framework-first implementation: vLLM, Runpod, benchmarks]\n  G[Production system: evals, SLOs, observability, cost, reliability]\n\n  A --&gt; B --&gt; C --&gt; D --&gt; E --&gt; F --&gt; G",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Executive Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-executive-map.html#reader-outcome",
+    "href": "chapters/01-executive-map.html#reader-outcome",
+    "title": "2  Executive Map",
+    "section": "2.2 Reader Outcome",
+    "text": "2.2 Reader Outcome\nThe reader should finish with the ability to:\n\nCompare AI data center design choices from cooling to networking.\nExplain how hardware architecture shapes inference latency and throughput.\nRead model architecture papers through an inference lens.\nDeploy and benchmark an LLM server with a framework-first workflow.\nDiagnose bottlenecks across CPU, GPU, memory, network, runtime, and model.\nEvaluate advanced approaches such as speculative decoding and disaggregation.\nOperate inference services with measurable cost, quality, and reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Executive Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-executive-map.html#depth-contract",
+    "href": "chapters/01-executive-map.html#depth-contract",
+    "title": "2  Executive Map",
+    "section": "2.3 Depth Contract",
+    "text": "2.3 Depth Contract\nThis is not a chip-design textbook and not a prompt-engineering handbook. The depth target is systems literacy for inference engineers:\n\nDeep where choices change latency, throughput, reliability, or cost.\nPractical where the reader needs a runnable workflow.\nComparative where vendors and architectures differ.\nExplicit when a topic should be source-verified before publication.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Executive Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-ai-data-center-design-space.html",
+    "href": "chapters/02-ai-data-center-design-space.html",
+    "title": "3  AI Data Center Design Space",
+    "section": "",
+    "text": "3.1 Chapter Job\nAI inference starts with a physical constraint: every token consumes power, cooling, network capacity, memory bandwidth, accelerator time, and operational attention.\nBuild the vocabulary required to compare data center choices for inference systems.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>AI Data Center Design Space</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-ai-data-center-design-space.html#design-axes",
+    "href": "chapters/02-ai-data-center-design-space.html#design-axes",
+    "title": "3  AI Data Center Design Space",
+    "section": "3.2 Design Axes",
+    "text": "3.2 Design Axes\n\n\n\n\n\n\n\n\nAxis\nDesign choice\nInference consequence\n\n\n\n\nFacility\nColocation, hyperscale region, managed GPU cloud\nControl, speed, procurement risk\n\n\nPower\nRack density, redundancy, power capping\nMaximum accelerator density and burst behavior\n\n\nCooling\nAir, rear-door heat exchangers, direct liquid, immersion\nRack density, reliability, maintenance model\n\n\nCluster\nSingle node, rack-scale, pod-scale, multi-region\nScheduling, fault domains, data movement\n\n\nNetwork\nEthernet, InfiniBand, proprietary fabric\nCollective performance and tail latency\n\n\nStorage\nLocal NVMe, shared filesystem, object store\nModel load time and checkpoint movement\n\n\nOperations\nBare metal, Kubernetes, managed inference platform\nControl surface and team burden",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>AI Data Center Design Space</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-ai-data-center-design-space.html#comparecontrast-pattern",
+    "href": "chapters/02-ai-data-center-design-space.html#comparecontrast-pattern",
+    "title": "3  AI Data Center Design Space",
+    "section": "3.3 Compare/Contrast Pattern",
+    "text": "3.3 Compare/Contrast Pattern\nFor every data center design choice, ask:\n\nWhat workload shape does this favor?\nWhat failure mode does it create?\nWhat operational skill does it require?\nWhat measurement proves it works?\nWhat gets harder when the cluster grows?",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>AI Data Center Design Space</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-ai-data-center-design-space.html#what-this-enables-later",
+    "href": "chapters/02-ai-data-center-design-space.html#what-this-enables-later",
+    "title": "3  AI Data Center Design Space",
+    "section": "3.4 What This Enables Later",
+    "text": "3.4 What This Enables Later\nThe rest of the book repeatedly returns to this chapter. Batching, KV cache, tensor parallelism, disaggregated prefill/decode, and specialized systems only make sense when the physical envelope is visible.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>AI Data Center Design Space</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-power-cooling-rack-density.html",
+    "href": "chapters/03-power-cooling-rack-density.html",
+    "title": "4  Power, Cooling, and Rack Density",
+    "section": "",
+    "text": "4.1 Chapter Job\nInference clusters are constrained by heat and power before they are constrained by architectural taste.\nExplain how power delivery and cooling choices shape AI hardware density, availability, and operating cost.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Power, Cooling, and Rack Density</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-power-cooling-rack-density.html#cooling-choices",
+    "href": "chapters/03-power-cooling-rack-density.html#cooling-choices",
+    "title": "4  Power, Cooling, and Rack Density",
+    "section": "4.2 Cooling Choices",
+    "text": "4.2 Cooling Choices\n\n\n\n\n\n\n\n\nCooling model\nWhy teams choose it\nTradeoff to inspect\n\n\n\n\nAir cooling\nSimpler operations and broad facility compatibility\nLower practical rack density\n\n\nRear-door heat exchanger\nTransitional path for denser racks\nIntegration and airflow discipline\n\n\nDirect-to-chip liquid cooling\nHigher density and thermal headroom\nFacility readiness and maintenance\n\n\nImmersion cooling\nHigh-density thermal envelope\nEcosystem maturity and service model",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Power, Cooling, and Rack Density</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-power-cooling-rack-density.html#inference-specific-questions",
+    "href": "chapters/03-power-cooling-rack-density.html#inference-specific-questions",
+    "title": "4  Power, Cooling, and Rack Density",
+    "section": "4.3 Inference-Specific Questions",
+    "text": "4.3 Inference-Specific Questions\n\nDoes the workload create steady load or bursty load?\nCan the facility support sustained accelerator utilization?\nWhat happens when thermal throttling starts?\nAre power caps configured intentionally or discovered during incidents?\nCan the same rack support both prefill-heavy and decode-heavy workloads?",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Power, Cooling, and Rack Density</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-power-cooling-rack-density.html#artifact",
+    "href": "chapters/03-power-cooling-rack-density.html#artifact",
+    "title": "4  Power, Cooling, and Rack Density",
+    "section": "4.4 Artifact",
+    "text": "4.4 Artifact\nCreate a rack design card:\n\nRack density target.\nAccelerator count.\nPower envelope.\nCooling method.\nNetwork ports per node.\nFailure domain.\nMeasured utilization assumption.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Power, Cooling, and Rack Density</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-ai-networking-and-cluster-topology.html",
+    "href": "chapters/04-ai-networking-and-cluster-topology.html",
+    "title": "5  AI Networking and Cluster Topology",
+    "section": "",
+    "text": "5.1 Chapter Job\nThe network decides whether multiple accelerators behave like one system or like several expensive islands.\nCompare networking choices for inference: node-local traffic, multi-GPU collectives, multi-node scaling, storage movement, and user-facing serving traffic.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>AI Networking and Cluster Topology</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-ai-networking-and-cluster-topology.html#traffic-classes",
+    "href": "chapters/04-ai-networking-and-cluster-topology.html#traffic-classes",
+    "title": "5  AI Networking and Cluster Topology",
+    "section": "5.2 Traffic Classes",
+    "text": "5.2 Traffic Classes\n\nUser request traffic.\nModel weight and checkpoint movement.\nTensor-parallel and pipeline-parallel communication.\nKV cache or activation movement in disaggregated systems.\nObservability and control-plane traffic.\nStorage reads for model load and warmup.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>AI Networking and Cluster Topology</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-ai-networking-and-cluster-topology.html#topology-concepts",
+    "href": "chapters/04-ai-networking-and-cluster-topology.html#topology-concepts",
+    "title": "5  AI Networking and Cluster Topology",
+    "section": "5.3 Topology Concepts",
+    "text": "5.3 Topology Concepts\n\nPCIe root complex.\nNUMA locality.\nNVLink-class local accelerator fabrics.\nEthernet and InfiniBand fabrics.\nFat-tree, rail-optimized, and pod-level designs.\nOversubscription and failure domains.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>AI Networking and Cluster Topology</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-ai-networking-and-cluster-topology.html#practical-question",
+    "href": "chapters/04-ai-networking-and-cluster-topology.html#practical-question",
+    "title": "5  AI Networking and Cluster Topology",
+    "section": "5.4 Practical Question",
+    "text": "5.4 Practical Question\nFor a given model and target SLO, decide whether the system should scale:\n\nUp inside one node.\nAcross multiple accelerators in one node.\nAcross multiple nodes.\nAcross regions or providers.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>AI Networking and Cluster Topology</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-data-center-stack-tradeoffs.html",
+    "href": "chapters/05-data-center-stack-tradeoffs.html",
+    "title": "6  Data Center Stack Tradeoffs",
+    "section": "",
+    "text": "6.1 Chapter Job\nThis chapter turns the previous data center topics into decision matrices.\nGive the reader a practical method for choosing a stack: cloud GPU rental, managed serverless GPUs, bare metal GPU clusters, specialized inference providers, or fully owned infrastructure.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Data Center Stack Tradeoffs</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-data-center-stack-tradeoffs.html#stack-options",
+    "href": "chapters/05-data-center-stack-tradeoffs.html#stack-options",
+    "title": "6  Data Center Stack Tradeoffs",
+    "section": "6.2 Stack Options",
+    "text": "6.2 Stack Options\n\n\n\n\n\n\n\n\nOption\nStrength\nCost or risk\n\n\n\n\nManaged API\nFastest product integration\nLowest infrastructure control\n\n\nGPU cloud instance\nGood for experiments and medium control\nAvailability and price volatility\n\n\nManaged GPU platform\nFaster deployment path\nPlatform constraints\n\n\nBare metal cluster\nMaximum control and stable utilization\nProcurement and operations burden\n\n\nSpecialized inference system\nStrong fit for specific workload classes\nPortability and ecosystem risk",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Data Center Stack Tradeoffs</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-data-center-stack-tradeoffs.html#decision-template",
+    "href": "chapters/05-data-center-stack-tradeoffs.html#decision-template",
+    "title": "6  Data Center Stack Tradeoffs",
+    "section": "6.3 Decision Template",
+    "text": "6.3 Decision Template\nScore each option across:\n\nTime to first benchmark.\nTime to production.\nHardware control.\nNetwork control.\nRuntime control.\nCost predictability.\nFailure isolation.\nVendor lock-in.\nTeam skill required.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Data Center Stack Tradeoffs</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-data-center-stack-tradeoffs.html#bridge",
+    "href": "chapters/05-data-center-stack-tradeoffs.html#bridge",
+    "title": "6  Data Center Stack Tradeoffs",
+    "section": "6.4 Bridge",
+    "text": "6.4 Bridge\nAfter the data center choices are visible, the book moves inward: what is inside the node, what matters in the accelerator, and which knobs are actually configurable by an inference engineer.",
+    "crumbs": [
+      "Part I: AI Data Center Design",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Data Center Stack Tradeoffs</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-inference-metrics-first-principles.html",
+    "href": "chapters/06-inference-metrics-first-principles.html",
+    "title": "7  Metrics First: The Inference Control Plane",
+    "section": "",
+    "text": "7.1 Chapter Job\nMetrics are the control plane for inference engineering. Without them, hardware and runtime discussions collapse into preference.\nDefine the metrics that let engineers compare hardware, runtimes, model architectures, and deployment designs.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Metrics First: The Inference Control Plane</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-inference-metrics-first-principles.html#core-metrics",
+    "href": "chapters/06-inference-metrics-first-principles.html#core-metrics",
+    "title": "7  Metrics First: The Inference Control Plane",
+    "section": "7.2 Core Metrics",
+    "text": "7.2 Core Metrics\n\nTime to first token.\nInter-token latency.\nTime to last token.\nEnd-to-end product latency.\nTokens per second per request.\nAggregate tokens per second.\nRequests per second.\nQueue time.\nPrefill time.\nDecode time.\nKV cache memory.\nAccelerator utilization.\nCPU utilization.\nNetwork utilization.\nCost per request.\nCost per successful task.\nQuality or task-success score.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Metrics First: The Inference Control Plane</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-inference-metrics-first-principles.html#measurement-rule",
+    "href": "chapters/06-inference-metrics-first-principles.html#measurement-rule",
+    "title": "7  Metrics First: The Inference Control Plane",
+    "section": "7.3 Measurement Rule",
+    "text": "7.3 Measurement Rule\nEvery performance claim should name:\n\nModel.\nHardware.\nRuntime.\nPrecision or quantization.\nPrompt length distribution.\nOutput length distribution.\nBatch and concurrency settings.\nDataset or traffic source.\nPercentile latency, not only averages.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Metrics First: The Inference Control Plane</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-inference-metrics-first-principles.html#artifact",
+    "href": "chapters/06-inference-metrics-first-principles.html#artifact",
+    "title": "7  Metrics First: The Inference Control Plane",
+    "section": "7.4 Artifact",
+    "text": "7.4 Artifact\nThe reader creates a benchmark card that can be reused throughout the book.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Metrics First: The Inference Control Plane</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-ai-hardware-taxonomy.html",
+    "href": "chapters/07-ai-hardware-taxonomy.html",
+    "title": "8  AI Hardware Taxonomy",
+    "section": "",
+    "text": "8.1 Chapter Job\nInference hardware is not one category. GPUs, CPUs, AI ASICs, LPUs, wafer-scale systems, and dataflow machines expose different tradeoffs.\nGive the reader a hardware map before going vendor by vendor.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>AI Hardware Taxonomy</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-ai-hardware-taxonomy.html#hardware-families",
+    "href": "chapters/07-ai-hardware-taxonomy.html#hardware-families",
+    "title": "8  AI Hardware Taxonomy",
+    "section": "8.2 Hardware Families",
+    "text": "8.2 Hardware Families\n\nGeneral-purpose CPUs.\nGPUs.\nIntegrated CPU-GPU systems.\nAI ASICs.\nDataflow accelerators.\nWafer-scale systems.\nLPU-style deterministic token systems.\nEdge accelerators.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>AI Hardware Taxonomy</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-ai-hardware-taxonomy.html#comparison-axes",
+    "href": "chapters/07-ai-hardware-taxonomy.html#comparison-axes",
+    "title": "8  AI Hardware Taxonomy",
+    "section": "8.3 Comparison Axes",
+    "text": "8.3 Comparison Axes\n\nMemory capacity.\nMemory bandwidth.\nCompute throughput.\nInterconnect.\nPrecision support.\nSoftware maturity.\nCompiler model.\nServing framework support.\nOperational availability.\nWorkload fit.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>AI Hardware Taxonomy</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-ai-hardware-taxonomy.html#inference-lens",
+    "href": "chapters/07-ai-hardware-taxonomy.html#inference-lens",
+    "title": "8  AI Hardware Taxonomy",
+    "section": "8.4 Inference Lens",
+    "text": "8.4 Inference Lens\nHardware should be evaluated by workload phase:\n\nPrefill-heavy traffic.\nDecode-heavy traffic.\nLong-context traffic.\nMoE routing and expert load balance.\nBatch/offline inference.\nReal-time interactive streaming.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>AI Hardware Taxonomy</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-cpu-gpu-node-architecture.html",
+    "href": "chapters/08-cpu-gpu-node-architecture.html",
+    "title": "9  CPU-GPU Node Architecture",
+    "section": "",
+    "text": "9.1 Chapter Job\nAn inference node is a system of CPUs, memory, accelerators, NICs, storage, and software queues. The GPU is the center of gravity, but it is not the whole machine.\nExplain how a single node moves work from process to CPU to GPU and back.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>CPU-GPU Node Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-cpu-gpu-node-architecture.html#node-components",
+    "href": "chapters/08-cpu-gpu-node-architecture.html#node-components",
+    "title": "9  CPU-GPU Node Architecture",
+    "section": "9.2 Node Components",
+    "text": "9.2 Node Components\n\nCPU sockets.\nNUMA domains.\nSystem memory.\nPCIe topology.\nGPUs or accelerators.\nGPU memory.\nNICs.\nLocal NVMe.\nDrivers and runtime libraries.\nContainer and orchestration layer.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>CPU-GPU Node Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-cpu-gpu-node-architecture.html#critical-paths",
+    "href": "chapters/08-cpu-gpu-node-architecture.html#critical-paths",
+    "title": "9  CPU-GPU Node Architecture",
+    "section": "9.3 Critical Paths",
+    "text": "9.3 Critical Paths\n\n\n\n\n\nflowchart LR\n  A[HTTP request] --&gt; B[Runtime process]\n  B --&gt; C[Tokenizer and scheduler on CPU]\n  C --&gt; D[Host memory]\n  D --&gt; E[PCIe or local fabric]\n  E --&gt; F[Accelerator memory]\n  F --&gt; G[Kernels]\n  G --&gt; H[Generated tokens]\n  H --&gt; C\n  C --&gt; I[Streamed response]",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>CPU-GPU Node Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-cpu-gpu-node-architecture.html#failure-modes",
+    "href": "chapters/08-cpu-gpu-node-architecture.html#failure-modes",
+    "title": "9  CPU-GPU Node Architecture",
+    "section": "9.4 Failure Modes",
+    "text": "9.4 Failure Modes\n\nCPU-side bottlenecks hidden by low GPU utilization.\nNUMA mismatch between process, NIC, and GPU.\nPCIe topology limiting multi-GPU communication.\nTokenization or post-processing blocking streaming.\nStorage path slowing model load and warmup.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>CPU-GPU Node Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-configurable-hardware-surfaces.html",
+    "href": "chapters/09-configurable-hardware-surfaces.html",
+    "title": "10  Configurable Hardware Surfaces",
+    "section": "",
+    "text": "10.1 Chapter Job\nInference engineers rarely redesign silicon, but they do configure the system that exposes the silicon.\nList the hardware and system-level controls an inference engineer can actually change.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Configurable Hardware Surfaces</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-configurable-hardware-surfaces.html#configuration-surfaces",
+    "href": "chapters/09-configurable-hardware-surfaces.html#configuration-surfaces",
+    "title": "10  Configurable Hardware Surfaces",
+    "section": "10.2 Configuration Surfaces",
+    "text": "10.2 Configuration Surfaces\n\nGPU clocks and power limits.\nMIG or partitioning modes where available.\nNUMA pinning.\nCPU affinity.\nHuge pages and memory behavior.\nPCIe and NIC placement.\nDriver, CUDA, ROCm, oneAPI, or vendor runtime versions.\nContainer image and kernel module compatibility.\nPrecision and quantization choices.\nTensor parallel and pipeline parallel layout.\nBatch size and scheduler knobs.\nKV cache allocation.\nModel placement and warmup policy.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Configurable Hardware Surfaces</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-configurable-hardware-surfaces.html#discipline",
+    "href": "chapters/09-configurable-hardware-surfaces.html#discipline",
+    "title": "10  Configurable Hardware Surfaces",
+    "section": "10.3 Discipline",
+    "text": "10.3 Discipline\nEvery configuration change needs a before/after benchmark and a rollback path. The book treats configuration as an experimental system, not as a bag of tuning tips.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Configurable Hardware Surfaces</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-nvidia-generations-and-patterns.html",
+    "href": "chapters/10-nvidia-generations-and-patterns.html",
+    "title": "11  NVIDIA Generations and Patterns",
+    "section": "",
+    "text": "11.1 Chapter Job\nNVIDIA hardware is the default reference point for much of the inference ecosystem, so the book needs a generation-aware map.\nCompare NVIDIA generations by the patterns that matter for inference rather than memorizing product names.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>NVIDIA Generations and Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-nvidia-generations-and-patterns.html#topics",
+    "href": "chapters/10-nvidia-generations-and-patterns.html#topics",
+    "title": "11  NVIDIA Generations and Patterns",
+    "section": "11.2 Topics",
+    "text": "11.2 Topics\n\nCUDA programming model as the dominant software contract.\nTensor cores and precision evolution.\nHBM capacity and bandwidth.\nNVLink and node-scale fabrics.\nMIG and partitioning concepts.\nTransformer Engine-style precision trends.\nBlackwell-generation themes to source-verify before publication.\nHow vLLM, TensorRT-LLM, Triton, and CUDA kernels sit on this stack.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>NVIDIA Generations and Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-nvidia-generations-and-patterns.html#pattern-questions",
+    "href": "chapters/10-nvidia-generations-and-patterns.html#pattern-questions",
+    "title": "11  NVIDIA Generations and Patterns",
+    "section": "11.3 Pattern Questions",
+    "text": "11.3 Pattern Questions\n\nWhat changed in memory capacity?\nWhat changed in memory bandwidth?\nWhat changed in interconnect?\nWhat changed in supported precision?\nWhat changed in software path maturity?\nWhat new workload class became practical?",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>NVIDIA Generations and Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-nvidia-generations-and-patterns.html#artifact",
+    "href": "chapters/10-nvidia-generations-and-patterns.html#artifact",
+    "title": "11  NVIDIA Generations and Patterns",
+    "section": "11.4 Artifact",
+    "text": "11.4 Artifact\nCreate a generation comparison table with source links and inference-relevant columns only.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>NVIDIA Generations and Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-intel-architectures-in-detail.html",
+    "href": "chapters/11-intel-architectures-in-detail.html",
+    "title": "12  Intel Architectures in Detail",
+    "section": "",
+    "text": "12.1 Chapter Job\nIntel matters in inference both as the CPU host architecture and as an accelerator ecosystem. This chapter receives deeper treatment than a simple vendor survey.\nExplain Intel-relevant inference architecture from CPU features to accelerator placement, software stack, and deployment tradeoffs.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Intel Architectures in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-intel-architectures-in-detail.html#cpu-side-topics",
+    "href": "chapters/11-intel-architectures-in-detail.html#cpu-side-topics",
+    "title": "12  Intel Architectures in Detail",
+    "section": "12.2 CPU-Side Topics",
+    "text": "12.2 CPU-Side Topics\n\nXeon server CPU role in inference nodes.\nNUMA topology and memory channels.\nPCIe lanes and accelerator attachment.\nAMX and CPU inference acceleration.\nHost-side tokenization, scheduling, networking, and preprocessing.\nCPU-only inference workloads and when they are reasonable.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Intel Architectures in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-intel-architectures-in-detail.html#accelerator-side-topics",
+    "href": "chapters/11-intel-architectures-in-detail.html#accelerator-side-topics",
+    "title": "12  Intel Architectures in Detail",
+    "section": "12.3 Accelerator-Side Topics",
+    "text": "12.3 Accelerator-Side Topics\n\nGaudi-class accelerator positioning.\nHBM, on-package memory, and network fabric concepts.\nCollective communication and scale-out implications.\nSoftware stack and framework integration.\nPrecision support and compiler/runtime path.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Intel Architectures in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-intel-architectures-in-detail.html#what-to-compare-against",
+    "href": "chapters/11-intel-architectures-in-detail.html#what-to-compare-against",
+    "title": "12  Intel Architectures in Detail",
+    "section": "12.4 What to Compare Against",
+    "text": "12.4 What to Compare Against\n\nNVIDIA GPU-based serving.\nAMD GPU-based serving.\nCPU-only serving.\nSpecialized dataflow or LPU-style systems.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Intel Architectures in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-intel-architectures-in-detail.html#publication-note",
+    "href": "chapters/11-intel-architectures-in-detail.html#publication-note",
+    "title": "12  Intel Architectures in Detail",
+    "section": "12.5 Publication Note",
+    "text": "12.5 Publication Note\nThis chapter should be written from official Intel architecture sources, validated benchmark reports, and hands-on experiments. Treat secondary claims as leads, not facts.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Intel Architectures in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-amd-architecture-patterns.html",
+    "href": "chapters/12-amd-architecture-patterns.html",
+    "title": "13  AMD Architecture Patterns",
+    "section": "",
+    "text": "13.1 Chapter Job\nAMD should be treated as a serious inference option with its own hardware and software tradeoffs, not as a footnote.\nMap AMD CPU and GPU architecture patterns that affect inference deployment.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>AMD Architecture Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-amd-architecture-patterns.html#topics",
+    "href": "chapters/12-amd-architecture-patterns.html#topics",
+    "title": "13  AMD Architecture Patterns",
+    "section": "13.2 Topics",
+    "text": "13.2 Topics\n\nEPYC host CPU role in dense inference nodes.\nNUMA, memory channels, PCIe lanes, and host-side throughput.\nInstinct GPU family as an accelerator option.\nHBM capacity and bandwidth patterns.\nROCm software stack maturity and compatibility questions.\nFramework support and operational gaps to test directly.\nMulti-GPU and multi-node communication considerations.",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>AMD Architecture Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-amd-architecture-patterns.html#comparison-questions",
+    "href": "chapters/12-amd-architecture-patterns.html#comparison-questions",
+    "title": "13  AMD Architecture Patterns",
+    "section": "13.3 Comparison Questions",
+    "text": "13.3 Comparison Questions\n\nWhich workloads are attractive on AMD hardware?\nWhich software path is mature enough for production?\nWhat runtime and kernel support is available?\nWhat is the debugging story?\nHow does cost/performance compare after operational effort is counted?",
+    "crumbs": [
+      "Part II: Silicon, Nodes, and Hardware Architecture",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>AMD Architecture Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-transformer-inference-mechanics.html",
+    "href": "chapters/13-transformer-inference-mechanics.html",
+    "title": "14  Transformer Inference Mechanics",
+    "section": "",
+    "text": "14.1 Chapter Job\nThe hardware chapters explain where the work runs. This chapter explains what the work is.\nExplain transformer inference in the terms an infrastructure engineer needs: prefill, decode, memory movement, KV cache, and batching.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformer Inference Mechanics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-transformer-inference-mechanics.html#core-mechanics",
+    "href": "chapters/13-transformer-inference-mechanics.html#core-mechanics",
+    "title": "14  Transformer Inference Mechanics",
+    "section": "14.2 Core Mechanics",
+    "text": "14.2 Core Mechanics\n\nTokenization.\nEmbedding lookup.\nTransformer block execution.\nAttention.\nMLP.\nNormalization.\nLogits and sampling.\nPrefill phase.\nDecode phase.\nStreaming response.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformer Inference Mechanics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-transformer-inference-mechanics.html#why-prefill-and-decode-differ",
+    "href": "chapters/13-transformer-inference-mechanics.html#why-prefill-and-decode-differ",
+    "title": "14  Transformer Inference Mechanics",
+    "section": "14.3 Why Prefill and Decode Differ",
+    "text": "14.3 Why Prefill and Decode Differ\nPrefill processes a prompt in parallel. Decode generates tokens one step at a time. Their bottlenecks, batching behavior, and memory pressure differ.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformer Inference Mechanics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-transformer-inference-mechanics.html#artifact",
+    "href": "chapters/13-transformer-inference-mechanics.html#artifact",
+    "title": "14  Transformer Inference Mechanics",
+    "section": "14.4 Artifact",
+    "text": "14.4 Artifact\nThe reader creates a prefill/decode timeline for one model serving request.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Transformer Inference Mechanics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-attention-kv-cache-long-context.html",
+    "href": "chapters/14-attention-kv-cache-long-context.html",
+    "title": "15  Attention, KV Cache, and Long Context",
+    "section": "",
+    "text": "15.1 Chapter Job\nAttention is where model architecture becomes an inference systems problem.\nConnect attention mechanisms to memory footprint, latency, batching, and long context behavior.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Attention, KV Cache, and Long Context</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-attention-kv-cache-long-context.html#topics",
+    "href": "chapters/14-attention-kv-cache-long-context.html#topics",
+    "title": "15  Attention, KV Cache, and Long Context",
+    "section": "15.2 Topics",
+    "text": "15.2 Topics\n\nMulti-head attention.\nGrouped-query attention.\nMulti-query attention.\nKV cache allocation.\nKV cache fragmentation.\nPrefix caching.\nSliding window and long-context strategies.\nRAG versus long-context tradeoffs.\nWhy context length changes throughput and cost.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Attention, KV Cache, and Long Context</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-attention-kv-cache-long-context.html#practical-questions",
+    "href": "chapters/14-attention-kv-cache-long-context.html#practical-questions",
+    "title": "15  Attention, KV Cache, and Long Context",
+    "section": "15.3 Practical Questions",
+    "text": "15.3 Practical Questions\n\nHow much KV memory does this workload need?\nDoes the serving runtime page or compact KV cache efficiently?\nDoes prefix reuse matter for this traffic?\nIs long context solving the product problem or hiding retrieval design debt?",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Attention, KV Cache, and Long Context</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/15-moe-state-space-and-specialized-models.html",
+    "href": "chapters/15-moe-state-space-and-specialized-models.html",
+    "title": "16  MoE, State Space, and Specialized Models",
+    "section": "",
+    "text": "16.1 Chapter Job\nNot every model stresses the inference stack in the same way.\nExplain why model architecture changes serving behavior.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MoE, State Space, and Specialized Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/15-moe-state-space-and-specialized-models.html#moe-topics",
+    "href": "chapters/15-moe-state-space-and-specialized-models.html#moe-topics",
+    "title": "16  MoE, State Space, and Specialized Models",
+    "section": "16.2 MoE Topics",
+    "text": "16.2 MoE Topics\n\nExpert routing.\nActive parameters versus total parameters.\nLoad balance.\nExpert parallelism.\nNetwork pressure.\nBatch composition.\nTail latency risks.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MoE, State Space, and Specialized Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/15-moe-state-space-and-specialized-models.html#state-space-and-alternative-architectures",
+    "href": "chapters/15-moe-state-space-and-specialized-models.html#state-space-and-alternative-architectures",
+    "title": "16  MoE, State Space, and Specialized Models",
+    "section": "16.3 State-Space and Alternative Architectures",
+    "text": "16.3 State-Space and Alternative Architectures\n\nWhy non-attention architectures are attractive for long sequences.\nWhat changes in memory and compute profile.\nWhat serving engines need to support.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MoE, State Space, and Specialized Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/15-moe-state-space-and-specialized-models.html#specialized-models",
+    "href": "chapters/15-moe-state-space-and-specialized-models.html#specialized-models",
+    "title": "16  MoE, State Space, and Specialized Models",
+    "section": "16.4 Specialized Models",
+    "text": "16.4 Specialized Models\n\nEmbedding models.\nRerankers.\nVision-language models.\nSpeech models.\nSmall language models as probes and production workhorses.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MoE, State Space, and Specialized Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/16-rl-and-policy-inference.html",
+    "href": "chapters/16-rl-and-policy-inference.html",
+    "title": "17  RL and Policy Inference",
+    "section": "",
+    "text": "17.1 Chapter Job\nRL-related inference workloads often look different from chatbot serving.\nExplain advanced inference patterns that appear in RL, alignment, simulation, search, and policy evaluation.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>RL and Policy Inference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/16-rl-and-policy-inference.html#workload-patterns",
+    "href": "chapters/16-rl-and-policy-inference.html#workload-patterns",
+    "title": "17  RL and Policy Inference",
+    "section": "17.2 Workload Patterns",
+    "text": "17.2 Workload Patterns\n\nMany short rollouts.\nBatched policy evaluation.\nTree search or verifier-guided generation.\nReward model scoring.\nRejection sampling.\nSelf-play or simulation loops.\nOnline policy serving.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>RL and Policy Inference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/16-rl-and-policy-inference.html#systems-consequences",
+    "href": "chapters/16-rl-and-policy-inference.html#systems-consequences",
+    "title": "17  RL and Policy Inference",
+    "section": "17.3 Systems Consequences",
+    "text": "17.3 Systems Consequences\n\nSmall latency differences multiply across rollouts.\nBatch shape can be highly irregular.\nCPU-side orchestration can dominate accelerator time.\nCaching and reuse may be possible across search branches.\nQuality metrics need task-level outcomes, not only token-level speed.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>RL and Policy Inference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/16-rl-and-policy-inference.html#bridge",
+    "href": "chapters/16-rl-and-policy-inference.html#bridge",
+    "title": "17  RL and Policy Inference",
+    "section": "17.4 Bridge",
+    "text": "17.4 Bridge\nThe next section moves from model mechanics to the kernels and compiler paths that make these workloads fast enough to matter.",
+    "crumbs": [
+      "Part III: Model Mechanics That Matter for Inference",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>RL and Policy Inference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/17-kernels-and-compiler-path.html",
+    "href": "chapters/17-kernels-and-compiler-path.html",
+    "title": "18  Kernels and Compiler Path",
+    "section": "",
+    "text": "18.1 Chapter Job\nKernel engineering matters because inference is often limited by memory movement and launch overhead, not just arithmetic throughput.\nGive the reader enough kernel and compiler literacy to understand runtime choices without becoming a kernel specialist.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Kernels and Compiler Path</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/17-kernels-and-compiler-path.html#topics",
+    "href": "chapters/17-kernels-and-compiler-path.html#topics",
+    "title": "18  Kernels and Compiler Path",
+    "section": "18.2 Topics",
+    "text": "18.2 Topics\n\nWhat a kernel is.\nKernel launch overhead.\nMemory coalescing.\nTiling.\nFused operations.\nAttention kernels.\nGEMM kernels.\nSampling kernels.\nTriton.\nCUTLASS-style libraries.\ntorch.compile and graph capture.\nTensorRT-LLM-style optimized paths.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Kernels and Compiler Path</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/17-kernels-and-compiler-path.html#depth-boundary",
+    "href": "chapters/17-kernels-and-compiler-path.html#depth-boundary",
+    "title": "18  Kernels and Compiler Path",
+    "section": "18.3 Depth Boundary",
+    "text": "18.3 Depth Boundary\nThis chapter should teach how to reason about kernels, inspect whether optimized kernels are being used, and understand why a runtime gets faster. It does not need to teach full CUDA kernel authorship.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Kernels and Compiler Path</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/18-memory-bandwidth-quantization-numerics.html",
+    "href": "chapters/18-memory-bandwidth-quantization-numerics.html",
+    "title": "19  Memory Bandwidth, Quantization, and Numerics",
+    "section": "",
+    "text": "19.1 Chapter Job\nMany inference optimizations are memory optimizations wearing a model name.\nExplain how precision and quantization change memory, speed, quality, and hardware compatibility.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Memory Bandwidth, Quantization, and Numerics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/18-memory-bandwidth-quantization-numerics.html#topics",
+    "href": "chapters/18-memory-bandwidth-quantization-numerics.html#topics",
+    "title": "19  Memory Bandwidth, Quantization, and Numerics",
+    "section": "19.2 Topics",
+    "text": "19.2 Topics\n\nBF16, FP16, FP8, INT8, INT4, and mixed precision.\nWeight-only quantization.\nActivation quantization.\nKV cache quantization.\nCalibration.\nQuality evaluation.\nBandwidth versus compute bottlenecks.\nQuantization support across runtimes and hardware.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Memory Bandwidth, Quantization, and Numerics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/18-memory-bandwidth-quantization-numerics.html#discipline",
+    "href": "chapters/18-memory-bandwidth-quantization-numerics.html#discipline",
+    "title": "19  Memory Bandwidth, Quantization, and Numerics",
+    "section": "19.3 Discipline",
+    "text": "19.3 Discipline\nNo quantization claim is complete without:\n\nModel.\nDataset or task.\nHardware.\nRuntime.\nPrecision format.\nLatency and throughput result.\nQuality regression result.",
+    "crumbs": [
+      "Part IV: Kernels, Compilers, and Runtime Primitives",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Memory Bandwidth, Quantization, and Numerics</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/19-serving-engines-and-runtime-map.html",
+    "href": "chapters/19-serving-engines-and-runtime-map.html",
+    "title": "20  Serving Engines and Runtime Map",
+    "section": "",
+    "text": "20.1 Chapter Job\nServing engines are where model mechanics meet scheduler policy.\nMap the runtime ecosystem and explain why the book uses a framework-first path.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Serving Engines and Runtime Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/19-serving-engines-and-runtime-map.html#runtime-families",
+    "href": "chapters/19-serving-engines-and-runtime-map.html#runtime-families",
+    "title": "20  Serving Engines and Runtime Map",
+    "section": "20.2 Runtime Families",
+    "text": "20.2 Runtime Families\n\nvLLM.\nSGLang.\nTensorRT-LLM.\nTriton Inference Server.\nText Generation Inference.\nllama.cpp and local runtimes.\nManaged provider runtimes.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Serving Engines and Runtime Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/19-serving-engines-and-runtime-map.html#comparison-axes",
+    "href": "chapters/19-serving-engines-and-runtime-map.html#comparison-axes",
+    "title": "20  Serving Engines and Runtime Map",
+    "section": "20.3 Comparison Axes",
+    "text": "20.3 Comparison Axes\n\nScheduler design.\nKV cache management.\nContinuous batching.\nPrefix caching.\nStructured output and tool support.\nQuantization support.\nTensor and pipeline parallel support.\nObservability hooks.\nDeployment maturity.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Serving Engines and Runtime Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/19-serving-engines-and-runtime-map.html#book-default",
+    "href": "chapters/19-serving-engines-and-runtime-map.html#book-default",
+    "title": "20  Serving Engines and Runtime Map",
+    "section": "20.4 Book Default",
+    "text": "20.4 Book Default\nThe primary implementation path is vLLM because it is practical, visible, widely used, and exposes the right concepts for learning.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Serving Engines and Runtime Map</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/20-vllm-from-first-principles.html",
+    "href": "chapters/20-vllm-from-first-principles.html",
+    "title": "21  vLLM From First Principles",
+    "section": "",
+    "text": "21.1 Chapter Job\nvLLM is the book’s main hands-on serving engine.\nTeach vLLM as an inference systems artifact: scheduler, memory manager, API server, and performance surface.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>vLLM From First Principles</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/20-vllm-from-first-principles.html#topics",
+    "href": "chapters/20-vllm-from-first-principles.html#topics",
+    "title": "21  vLLM From First Principles",
+    "section": "21.2 Topics",
+    "text": "21.2 Topics\n\nOpenAI-compatible server.\nOffline batch inference.\nContinuous batching.\nPagedAttention.\nKV cache allocation.\nPrefix caching.\nTensor parallelism.\nQuantization support.\nSampling configuration.\nStreaming.\nMetrics endpoint.\nCommon OOM and capacity failures.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>vLLM From First Principles</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/20-vllm-from-first-principles.html#lab-path",
+    "href": "chapters/20-vllm-from-first-principles.html#lab-path",
+    "title": "21  vLLM From First Principles",
+    "section": "21.3 Lab Path",
+    "text": "21.3 Lab Path\nThe reader should implement:\n\nServe a small model.\nRun a streaming probe.\nMeasure TTFT and total latency.\nChange concurrency and output length.\nEnable prefix caching where applicable.\nCapture metrics and compare results.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>vLLM From First Principles</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/21-runpodai-practical-deployment.html",
+    "href": "chapters/21-runpodai-practical-deployment.html",
+    "title": "22  Runpod.ai Practical Deployment",
+    "section": "",
+    "text": "22.1 Chapter Job\nRunpod is the book’s default on-demand GPU lab environment.\nGive the reader a practical path to rent GPU capacity, launch a pod, run vLLM, and collect benchmark results.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Runpod.ai Practical Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/21-runpodai-practical-deployment.html#workflow",
+    "href": "chapters/21-runpodai-practical-deployment.html#workflow",
+    "title": "22  Runpod.ai Practical Deployment",
+    "section": "22.2 Workflow",
+    "text": "22.2 Workflow\n\nChoose a GPU based on model size and memory needs.\nStart a pod with a suitable container image.\nAttach persistent storage if needed.\nInstall or use a prebuilt vLLM environment.\nStart the vLLM OpenAI-compatible server.\nExpose the endpoint safely.\nRun a benchmark from a client.\nSave metrics and configuration.\nStop resources when done.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Runpod.ai Practical Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/21-runpodai-practical-deployment.html#operational-warnings",
+    "href": "chapters/21-runpodai-practical-deployment.html#operational-warnings",
+    "title": "22  Runpod.ai Practical Deployment",
+    "section": "22.3 Operational Warnings",
+    "text": "22.3 Operational Warnings\n\nTrack cost while experimenting.\nAvoid exposing unauthenticated endpoints.\nRecord exact GPU, image, driver, CUDA, Python, and vLLM versions.\nTreat ephemeral pods as disposable unless storage is explicitly configured.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Runpod.ai Practical Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/21-runpodai-practical-deployment.html#artifact",
+    "href": "chapters/21-runpodai-practical-deployment.html#artifact",
+    "title": "22  Runpod.ai Practical Deployment",
+    "section": "22.4 Artifact",
+    "text": "22.4 Artifact\nA reproducible Runpod experiment card:\n\nPod type.\nGPU.\nModel.\nRuntime command.\nBenchmark command.\nResults table.\nFailure notes.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Runpod.ai Practical Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/22-benchmarking-harness.html",
+    "href": "chapters/22-benchmarking-harness.html",
+    "title": "23  Benchmarking Harness",
+    "section": "",
+    "text": "23.1 Chapter Job\nBenchmarks are the book’s source of truth.\nDefine a harness that can compare runtimes, hardware, models, and settings without changing the question each time.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Benchmarking Harness</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/22-benchmarking-harness.html#harness-components",
+    "href": "chapters/22-benchmarking-harness.html#harness-components",
+    "title": "23  Benchmarking Harness",
+    "section": "23.2 Harness Components",
+    "text": "23.2 Harness Components\n\nPrompt dataset.\nOutput length control.\nConcurrency driver.\nStreaming probe.\nMetrics collector.\nResult summarizer.\nEnvironment snapshot.\nCost calculator.\nPlotting script.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Benchmarking Harness</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/22-benchmarking-harness.html#benchmark-types",
+    "href": "chapters/22-benchmarking-harness.html#benchmark-types",
+    "title": "23  Benchmarking Harness",
+    "section": "23.3 Benchmark Types",
+    "text": "23.3 Benchmark Types\n\nSingle request trace.\nConcurrency sweep.\nPrompt-length sweep.\nOutput-length sweep.\nQuantization comparison.\nPrefix-cache experiment.\nMulti-tenant load test.\nFailure and retry drill.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Benchmarking Harness</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/22-benchmarking-harness.html#source-link",
+    "href": "chapters/22-benchmarking-harness.html#source-link",
+    "title": "23  Benchmarking Harness",
+    "section": "23.4 Source Link",
+    "text": "23.4 Source Link\nThis chapter should promote material from the local inference-journal benchmarking and latency/SLO labs.",
+    "crumbs": [
+      "Part V: Framework-First Implementation",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Benchmarking Harness</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/23-speculative-decoding.html",
+    "href": "chapters/23-speculative-decoding.html",
+    "title": "24  Speculative Decoding",
+    "section": "",
+    "text": "24.1 Chapter Job\nSpeculative decoding is a good example of an advanced method that only makes sense when model, runtime, and hardware behavior are understood together.\nExplain draft/target decoding, when it helps, and how to measure it.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Speculative Decoding</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/23-speculative-decoding.html#topics",
+    "href": "chapters/23-speculative-decoding.html#topics",
+    "title": "24  Speculative Decoding",
+    "section": "24.2 Topics",
+    "text": "24.2 Topics\n\nDraft model.\nTarget model.\nAcceptance rate.\nVerification cost.\nLatency speedup.\nQuality preservation.\nWorkload sensitivity.\nRuntime support.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Speculative Decoding</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/23-speculative-decoding.html#measurement-questions",
+    "href": "chapters/23-speculative-decoding.html#measurement-questions",
+    "title": "24  Speculative Decoding",
+    "section": "24.3 Measurement Questions",
+    "text": "24.3 Measurement Questions\n\nWhat is the acceptance rate?\nDoes TTFT improve, total latency improve, or both?\nDoes speedup hold at concurrency?\nDoes the draft model consume scarce hardware capacity?\nDoes implementation complexity justify the win?",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Speculative Decoding</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/24-disaggregated-inference-architectures.html",
+    "href": "chapters/24-disaggregated-inference-architectures.html",
+    "title": "25  Disaggregated Inference Architectures",
+    "section": "",
+    "text": "25.1 Chapter Job\nDisaggregation separates parts of the inference path so each can scale and optimize differently.\nExplain why systems separate prefill, decode, memory, routing, and serving responsibilities.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Disaggregated Inference Architectures</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/24-disaggregated-inference-architectures.html#patterns",
+    "href": "chapters/24-disaggregated-inference-architectures.html#patterns",
+    "title": "25  Disaggregated Inference Architectures",
+    "section": "25.2 Patterns",
+    "text": "25.2 Patterns\n\nPrefill/decode disaggregation.\nKV cache movement or reuse.\nRouter and scheduler separation.\nMulti-tier serving.\nCPU offload.\nRemote memory or cache services.\nSpecialized hardware per phase.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Disaggregated Inference Architectures</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/24-disaggregated-inference-architectures.html#tradeoffs",
+    "href": "chapters/24-disaggregated-inference-architectures.html#tradeoffs",
+    "title": "25  Disaggregated Inference Architectures",
+    "section": "25.3 Tradeoffs",
+    "text": "25.3 Tradeoffs\n\nHigher utilization versus higher coordination complexity.\nBetter specialization versus more network dependence.\nLower cost at scale versus harder debugging.\nCleaner resource pools versus new failure modes.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Disaggregated Inference Architectures</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/24-disaggregated-inference-architectures.html#placement",
+    "href": "chapters/24-disaggregated-inference-architectures.html#placement",
+    "title": "25  Disaggregated Inference Architectures",
+    "section": "25.4 Placement",
+    "text": "25.4 Placement\nThis chapter belongs before the specialized system survey because it gives the reader a general vocabulary for architectures from SambaNova, Cerebras, Groq, and related systems.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Disaggregated Inference Architectures</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/25-specialized-inference-systems.html",
+    "href": "chapters/25-specialized-inference-systems.html",
+    "title": "26  Specialized Inference Systems: SambaNova, Cerebras, Groq",
+    "section": "",
+    "text": "26.1 Chapter Job\nSpecialized systems change the architecture conversation. They are not just faster GPUs; they often expose a different execution model.\nCompare specialized inference architectures by workload fit, software contract, scaling model, and operational tradeoff.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Specialized Inference Systems: SambaNova, Cerebras, Groq</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/25-specialized-inference-systems.html#systems-to-cover",
+    "href": "chapters/25-specialized-inference-systems.html#systems-to-cover",
+    "title": "26  Specialized Inference Systems: SambaNova, Cerebras, Groq",
+    "section": "26.2 Systems to Cover",
+    "text": "26.2 Systems to Cover\n\nSambaNova-style dataflow architecture.\nCerebras-style wafer-scale architecture.\nGroq-style deterministic token pipeline and LPU framing.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Specialized Inference Systems: SambaNova, Cerebras, Groq</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/25-specialized-inference-systems.html#comparison-axes",
+    "href": "chapters/25-specialized-inference-systems.html#comparison-axes",
+    "title": "26  Specialized Inference Systems: SambaNova, Cerebras, Groq",
+    "section": "26.3 Comparison Axes",
+    "text": "26.3 Comparison Axes\n\nProgramming model.\nCompiler path.\nMemory model.\nNetwork or scale-out model.\nLatency profile.\nThroughput profile.\nModel compatibility.\nServing interface.\nDeployment model.\nOperational maturity.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Specialized Inference Systems: SambaNova, Cerebras, Groq</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/25-specialized-inference-systems.html#rule",
+    "href": "chapters/25-specialized-inference-systems.html#rule",
+    "title": "26  Specialized Inference Systems: SambaNova, Cerebras, Groq",
+    "section": "26.4 Rule",
+    "text": "26.4 Rule\nThis chapter must separate vendor claims from measured behavior. Each system gets a source-verified architecture summary and a workload-fit analysis.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Specialized Inference Systems: SambaNova, Cerebras, Groq</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/26-multi-gpu-and-multi-node-scaling.html",
+    "href": "chapters/26-multi-gpu-and-multi-node-scaling.html",
+    "title": "27  Multi-GPU and Multi-Node Scaling",
+    "section": "",
+    "text": "27.1 Chapter Job\nScaling inference is not just adding more GPUs. The communication pattern has to match the model and runtime.\nTeach the scaling strategies that show up in real inference deployments.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Multi-GPU and Multi-Node Scaling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/26-multi-gpu-and-multi-node-scaling.html#topics",
+    "href": "chapters/26-multi-gpu-and-multi-node-scaling.html#topics",
+    "title": "27  Multi-GPU and Multi-Node Scaling",
+    "section": "27.2 Topics",
+    "text": "27.2 Topics\n\nData parallel serving.\nTensor parallelism.\nPipeline parallelism.\nExpert parallelism.\nSequence parallel and long-context variants.\nNCCL and collectives.\nTopology-aware placement.\nMulti-node routing.\nFailure domains.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Multi-GPU and Multi-Node Scaling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/26-multi-gpu-and-multi-node-scaling.html#diagnostic-questions",
+    "href": "chapters/26-multi-gpu-and-multi-node-scaling.html#diagnostic-questions",
+    "title": "27  Multi-GPU and Multi-Node Scaling",
+    "section": "27.3 Diagnostic Questions",
+    "text": "27.3 Diagnostic Questions\n\nIs the workload compute-bound, memory-bound, network-bound, or scheduler-bound?\nIs the model too large for one accelerator?\nDoes parallelism improve latency, throughput, or only capacity?\nWhich link is in the critical path?\nHow does tail latency change at scale?",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Multi-GPU and Multi-Node Scaling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/27-multitenancy-and-qos.html",
+    "href": "chapters/27-multitenancy-and-qos.html",
+    "title": "28  Multitenancy and QoS",
+    "section": "",
+    "text": "28.1 Chapter Job\nInference platforms become hard when many users, models, and workloads share the same capacity.\nExplain fairness, isolation, scheduling, and degradation in multi-tenant inference systems.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Multitenancy and QoS</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/27-multitenancy-and-qos.html#topics",
+    "href": "chapters/27-multitenancy-and-qos.html#topics",
+    "title": "28  Multitenancy and QoS",
+    "section": "28.2 Topics",
+    "text": "28.2 Topics\n\nTenant-aware queues.\nPriority classes.\nRate limits.\nAdmission control.\nDeadline-aware scheduling.\nPer-tenant cost attribution.\nNoisy-neighbor failures.\nModel pool isolation.\nShared versus dedicated capacity.\nGraceful degradation.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Multitenancy and QoS</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/27-multitenancy-and-qos.html#artifact",
+    "href": "chapters/27-multitenancy-and-qos.html#artifact",
+    "title": "28  Multitenancy and QoS",
+    "section": "28.3 Artifact",
+    "text": "28.3 Artifact\nDesign a QoS policy for three tenants:\n\nInteractive product traffic.\nInternal batch jobs.\nEvaluation workloads.",
+    "crumbs": [
+      "Part VI: Advanced Inference Architectures",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Multitenancy and QoS</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/28-evals-and-regression-testing.html",
+    "href": "chapters/28-evals-and-regression-testing.html",
+    "title": "29  Evals and Regression Testing",
+    "section": "",
+    "text": "29.1 Chapter Job\nInference changes can be technically faster and product-worse. Evals prevent that from becoming normal.\nDefine the release gates for prompt, model, runtime, quantization, and hardware changes.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Evals and Regression Testing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/28-evals-and-regression-testing.html#eval-layers",
+    "href": "chapters/28-evals-and-regression-testing.html#eval-layers",
+    "title": "29  Evals and Regression Testing",
+    "section": "29.2 Eval Layers",
+    "text": "29.2 Eval Layers\n\nUnit tests for prompt assembly.\nSchema validity tests.\nGolden examples.\nTask-specific graders.\nHuman review.\nSafety and policy tests.\nLatency and cost regression tests.\nShadow traffic.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Evals and Regression Testing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/28-evals-and-regression-testing.html#release-principle",
+    "href": "chapters/28-evals-and-regression-testing.html#release-principle",
+    "title": "29  Evals and Regression Testing",
+    "section": "29.3 Release Principle",
+    "text": "29.3 Release Principle\nEvery inference optimization needs two results:\n\nDid it improve the target system metric?\nDid it preserve or improve task quality?",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Evals and Regression Testing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/29-observability-reliability-security.html",
+    "href": "chapters/29-observability-reliability-security.html",
+    "title": "30  Observability, Reliability, and Security",
+    "section": "",
+    "text": "30.1 Chapter Job\nProduction inference needs one integrated operating model. Observability, reliability, and security cannot be bolted on after the benchmark.\nDefine the production control surface for inference systems.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Observability, Reliability, and Security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/29-observability-reliability-security.html#observability",
+    "href": "chapters/29-observability-reliability-security.html#observability",
+    "title": "30  Observability, Reliability, and Security",
+    "section": "30.2 Observability",
+    "text": "30.2 Observability\n\nRequest ID.\nModel and runtime version.\nPrompt template version.\nToken counts.\nPrefill and decode timing.\nQueue time.\nRetry count.\nOutput validity.\nUser or tenant class.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Observability, Reliability, and Security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/29-observability-reliability-security.html#reliability",
+    "href": "chapters/29-observability-reliability-security.html#reliability",
+    "title": "30  Observability, Reliability, and Security",
+    "section": "30.3 Reliability",
+    "text": "30.3 Reliability\n\nTimeout policy.\nRetry policy.\nCircuit breakers.\nFallback models.\nQueue limits.\nDegradation modes.\nCapacity reservations.\nIncident drills.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Observability, Reliability, and Security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/29-observability-reliability-security.html#security",
+    "href": "chapters/29-observability-reliability-security.html#security",
+    "title": "30  Observability, Reliability, and Security",
+    "section": "30.4 Security",
+    "text": "30.4 Security\n\nInput validation.\nPrompt injection controls.\nTool permissions.\nTenant isolation.\nLog redaction.\nSecret handling.\nCache boundaries.\nVendor and region policy.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Observability, Reliability, and Security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/30-cost-and-capacity-planning.html",
+    "href": "chapters/30-cost-and-capacity-planning.html",
+    "title": "31  Cost and Capacity Planning",
+    "section": "",
+    "text": "31.1 Chapter Job\nCost is a systems metric. It depends on model, workload, hardware, scheduler, utilization, and failure behavior.\nGive the reader a capacity and unit-economics method for inference systems.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Cost and Capacity Planning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/30-cost-and-capacity-planning.html#inputs",
+    "href": "chapters/30-cost-and-capacity-planning.html#inputs",
+    "title": "31  Cost and Capacity Planning",
+    "section": "31.2 Inputs",
+    "text": "31.2 Inputs\n\nRequest rate.\nPrompt length distribution.\nOutput length distribution.\nModel mix.\nConcurrency.\nTarget SLO.\nAccelerator cost.\nUtilization.\nRetry rate.\nCache hit rate.\nQuality threshold.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Cost and Capacity Planning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/30-cost-and-capacity-planning.html#outputs",
+    "href": "chapters/30-cost-and-capacity-planning.html#outputs",
+    "title": "31  Cost and Capacity Planning",
+    "section": "31.3 Outputs",
+    "text": "31.3 Outputs\n\nCost per request.\nCost per successful task.\nRequired accelerators.\nBurst headroom.\nFailure reserve.\nPer-tenant margin or budget.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Cost and Capacity Planning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/30-cost-and-capacity-planning.html#artifact",
+    "href": "chapters/30-cost-and-capacity-planning.html#artifact",
+    "title": "31  Cost and Capacity Planning",
+    "section": "31.4 Artifact",
+    "text": "31.4 Artifact\nA capacity model that converts product traffic into token load, hardware need, and cost.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Cost and Capacity Planning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/31-case-studies-and-capstones.html",
+    "href": "chapters/31-case-studies-and-capstones.html",
+    "title": "32  Case Studies and Capstones",
+    "section": "",
+    "text": "32.1 Chapter Job\nThe book should end with built systems, not just explanations.\nTurn the book into public artifacts that prove engineering judgment.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Case Studies and Capstones</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/31-case-studies-and-capstones.html#case-studies",
+    "href": "chapters/31-case-studies-and-capstones.html#case-studies",
+    "title": "32  Case Studies and Capstones",
+    "section": "32.2 Case Studies",
+    "text": "32.2 Case Studies\n\nInteractive chat assistant with streaming SLOs.\nLong-context analyst workflow.\nRAG versus long-context comparison.\nDocument extraction with structured output.\nMulti-tenant vLLM endpoint.\nSpeculative decoding experiment.\nRunpod benchmark report.\nSpecialized architecture comparison.\nCost and capacity planning memo.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Case Studies and Capstones</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/31-case-studies-and-capstones.html#capstone-format",
+    "href": "chapters/31-case-studies-and-capstones.html#capstone-format",
+    "title": "32  Case Studies and Capstones",
+    "section": "32.3 Capstone Format",
+    "text": "32.3 Capstone Format\nEach capstone should include:\n\nProblem statement.\nInference path.\nHardware and runtime choice.\nBenchmark setup.\nResults.\nQuality evaluation.\nCost model.\nFailure modes.\nWhat changed after measurement.",
+    "crumbs": [
+      "Part VII: Production Inference Engineering",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Case Studies and Capstones</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/source-map.html",
+    "href": "appendices/source-map.html",
+    "title": "Appendix A — Source Map",
+    "section": "",
+    "text": "A.1 Local Source Corpus\nThis appendix maps existing local inference-journal material into the book.\nThe local journal at /Users/ozgurguler/Developer/Projects/inference-journal contains raw daily logs, topic notes, benchmarks, and a prior mdBook outline.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Source Map</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/source-map.html#mapped-topics",
+    "href": "appendices/source-map.html#mapped-topics",
+    "title": "Appendix A — Source Map",
+    "section": "A.2 Mapped Topics",
+    "text": "A.2 Mapped Topics\n\n\n\n\n\n\n\nJournal source\nBook destination\n\n\n\n\ndays/day-002-GPU-node-bring-up\nCPU-GPU node architecture, configurable hardware surfaces\n\n\ndays/day-003-vLLM-capacity-and-OOM\nvLLM, benchmarking, capacity planning\n\n\ndays/day-004-quantization-vs-bf16\nQuantization and numerics\n\n\ndays/day-005-OS-and-NUMA-node-hardening\nCPU-GPU node architecture, hardware configuration\n\n\ndays/day-006-slm-memory\nMemory behavior, KV cache, small model probes\n\n\ndays/day-007-vllm-runtime-probes\nvLLM, TTFT, prefix caching, batching\n\n\ndays/day-008-groq-dc-dimensioning\nData center design, specialized systems, Groq comparison\n\n\ndays/day-009-latency-metrics-and-slo-lab\nMetrics, SLOs, benchmarking harness\n\n\ndays/day-010-attention-architecture-gqa-mqa\nAttention and KV cache\n\n\ndays/day-011-runtime-shootout\nRuntime map and serving engine comparisons\n\n\ndays/day-012-long-context-vs-rag\nLong context, RAG tradeoffs\n\n\ndays/day-013-speculative-decoding\nSpeculative decoding\n\n\ndays/day-014-multi-gpu-scaling\nMulti-GPU and multi-node scaling\n\n\ndays/day-015-multi-tenant-qos\nMultitenancy and QoS\n\n\ndays/day-016-cost-efficiency-accounting\nCost and capacity planning\n\n\ndays/day-017-reliability-guardrails\nReliability and guardrails\n\n\ndays/day-018-alignment-e2e-demo\nRL and policy inference, evals\n\n\ndays/day-019-state-space-or-moe\nMoE, state-space, specialized model mechanics\n\n\ndays02/ full-stack map\nOverall book structure and milestone progression\n\n\ntopics/vllm\nvLLM implementation chapters\n\n\ntopics/quantization\nQuantization chapter\n\n\ntopics/tensorrt-llm\nRuntime map and kernel/compiler path\n\n\ntopics/serving-patterns\nProduction and advanced architecture chapters",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Source Map</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/source-map.html#github-repo-note",
+    "href": "appendices/source-map.html#github-repo-note",
+    "title": "Appendix A — Source Map",
+    "section": "A.3 GitHub Repo Note",
+    "text": "A.3 GitHub Repo Note\nThe requested GitHub repository ozgurgulerx/inference-engineering did not resolve through the GitHub CLI during setup. If it is private, renamed, or under a different owner, update this appendix after adding the remote or cloning it locally.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Source Map</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html",
+    "href": "appendices/structure-review.html",
+    "title": "Appendix B — Structure Review",
+    "section": "",
+    "text": "B.1 Coherence Check\nThis appendix records the editorial logic of the book so the outline can be maintained as it grows.\nThe book now follows a physical-to-product progression:\nThis order prevents the reader from meeting advanced runtime choices before they understand the physical and architectural constraints those choices are trying to manage.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html#coherence-check",
+    "href": "appendices/structure-review.html#coherence-check",
+    "title": "Appendix B — Structure Review",
+    "section": "",
+    "text": "Data center constraints.\nHardware and node architecture.\nModel mechanics.\nKernels and runtimes.\nFramework-first implementation.\nAdvanced architectures.\nProduction engineering.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html#narrative-progression",
+    "href": "appendices/structure-review.html#narrative-progression",
+    "title": "Appendix B — Structure Review",
+    "section": "B.2 Narrative Progression",
+    "text": "B.2 Narrative Progression\nThe narrative moves from “where do tokens physically run?” to “how do we make that path measurable, fast, reliable, and cost-effective?”\nEach part should answer one question:\n\nData center: what physical envelope are we operating inside?\nHardware: what can the node and accelerator actually do?\nModels: what work does the model impose on the system?\nKernels: what makes execution efficient?\nFrameworks: how do we implement the concepts quickly?\nAdvanced systems: what changes at scale or with specialized architectures?\nProduction: how do we operate and improve the system safely?",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html#balance-check",
+    "href": "appendices/structure-review.html#balance-check",
+    "title": "Appendix B — Structure Review",
+    "section": "B.3 Balance Check",
+    "text": "B.3 Balance Check\nThe current outline is intentionally broad but not evenly deep.\nDeep chapters:\n\nMetrics.\nCPU-GPU node architecture.\nIntel architectures.\nAttention and KV cache.\nvLLM.\nBenchmarking.\nSpeculative decoding.\nDisaggregated inference.\nProduction observability and capacity planning.\n\nSurvey chapters:\n\nAMD architecture patterns until experiments are available.\nSpecialized systems until architecture claims are source-verified.\nKernel engineering beyond runtime-level literacy.\nModalities outside core LLM inference.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html#readability-rule",
+    "href": "appendices/structure-review.html#readability-rule",
+    "title": "Appendix B — Structure Review",
+    "section": "B.4 Readability Rule",
+    "text": "B.4 Readability Rule\nEvery chapter should contain:\n\nA concrete reader outcome.\nA short system diagram, table, or decision matrix.\nA practical artifact.\nA “what to measure” section.\nA “what can go wrong” section.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/structure-review.html#missing-work",
+    "href": "appendices/structure-review.html#missing-work",
+    "title": "Appendix B — Structure Review",
+    "section": "B.5 Missing Work",
+    "text": "B.5 Missing Work\n\nSource-verify vendor architecture claims.\nAdd citations and reference links.\nConvert local journal experiments into polished labs.\nAdd runnable Runpod and vLLM scripts.\nAdd benchmark result templates.\nDecide whether to merge or archive the older unused chapter stubs.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Structure Review</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/glossary.html",
+    "href": "appendices/glossary.html",
+    "title": "Appendix C — Glossary",
+    "section": "",
+    "text": "Batching\n\nCombining multiple inference requests into one model-server operation.\n\nContinuous batching\n\nA serving-engine scheduling technique that admits and completes requests dynamically rather than waiting for a fixed batch to finish.\n\nContext assembly\n\nBuilding the information sent to the model from user input, system state, retrieval, tools, and templates.\n\nDecode\n\nThe token-by-token generation phase after the prompt has been processed.\n\nDisaggregated inference\n\nAn architecture that separates phases or responsibilities such as prefill, decode, routing, cache, and memory so they can scale independently.\n\nEval\n\nA repeatable measurement of model or system behavior against examples, criteria, or human judgment.\n\nExpert parallelism\n\nA scaling strategy used by mixture-of-experts models where experts are placed across devices or nodes.\n\nInference path\n\nThe runtime sequence from user request to model output to product response.\n\nInter-token latency\n\nThe time between streamed output tokens during decode.\n\nKV cache\n\nCached key/value tensors used by transformer decoders to avoid recomputing attention over previous tokens.\n\nMoE\n\nMixture of experts, a model architecture where a router activates a subset of expert networks for a given token or request.\n\nPrefill\n\nThe phase that processes the input prompt before token-by-token generation.\n\nPrompt contract\n\nThe versioned agreement describing input shape, instructions, tool access, output schema, and expected behavior.\n\nQoS\n\nQuality of service; the policy layer that manages priority, fairness, admission, and degradation across tenants or workloads.\n\nSpeculative decoding\n\nA decoding method where a draft model proposes tokens and a target model verifies them to reduce generation latency when acceptance is high.\n\nTime to first token\n\nTime from request start to the first streamed output token.\n\nTime to last token\n\nTime from request start to the completed model output.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Glossary</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html",
+    "href": "appendices/checklists.html",
+    "title": "Appendix D — Checklists",
+    "section": "",
+    "text": "D.1 Data Center Design Review",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#data-center-design-review",
+    "href": "appendices/checklists.html#data-center-design-review",
+    "title": "Appendix D — Checklists",
+    "section": "",
+    "text": "Workload class is defined.\nRack power envelope is documented.\nCooling method and density target are documented.\nNetwork topology is mapped.\nStorage and model-load path are documented.\nFailure domains are named.\nBenchmark evidence exists for the proposed deployment shape.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#hardware-selection",
+    "href": "appendices/checklists.html#hardware-selection",
+    "title": "Appendix D — Checklists",
+    "section": "D.2 Hardware Selection",
+    "text": "D.2 Hardware Selection\n\nModel size and context length are known.\nPrecision and quantization targets are known.\nPrefill and decode workload mix is estimated.\nHBM capacity and bandwidth needs are estimated.\nCPU, memory, PCIe, NIC, and accelerator topology are reviewed.\nRuntime support is verified.\nCost and availability are included in the decision.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#new-inference-feature",
+    "href": "appendices/checklists.html#new-inference-feature",
+    "title": "Appendix D — Checklists",
+    "section": "D.3 New Inference Feature",
+    "text": "D.3 New Inference Feature\n\nProduct owner is named.\nInference path is drawn.\nPrompt contract is versioned.\nOutput schema is validated.\nLatency budget is defined.\nCost owner is defined.\nEval set exists.\nLogs and traces include request IDs.\nSensitive data handling is documented.\nFallback behavior is tested.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#model-or-prompt-change",
+    "href": "appendices/checklists.html#model-or-prompt-change",
+    "title": "Appendix D — Checklists",
+    "section": "D.4 Model or Prompt Change",
+    "text": "D.4 Model or Prompt Change\n\nChange reason is documented.\nEval run is attached to the PR.\nRegression failures are reviewed.\nRollout percentage is defined.\nDashboard is linked.\nRollback path is known.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#benchmark-report",
+    "href": "appendices/checklists.html#benchmark-report",
+    "title": "Appendix D — Checklists",
+    "section": "D.5 Benchmark Report",
+    "text": "D.5 Benchmark Report\n\nModel, runtime, hardware, and versions are recorded.\nPrompt and output distributions are described.\nConcurrency and batch settings are recorded.\nTTFT, inter-token latency, total latency, and throughput are included.\nQuality or task-success check is included.\nCost estimate is included.\nRaw results are saved.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/checklists.html#incident-review",
+    "href": "appendices/checklists.html#incident-review",
+    "title": "Appendix D — Checklists",
+    "section": "D.6 Incident Review",
+    "text": "D.6 Incident Review\n\nUser impact is stated in product terms.\nFailed boundary is identified.\nMissing signal is named.\nPreventive test or alert is added.\nOwner and due date are assigned.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Checklists</span>"
+    ]
+  }
+]
