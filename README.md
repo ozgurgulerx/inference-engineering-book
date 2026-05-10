@@ -1,5 +1,7 @@
 # Inference Engineering
 
+Live book: https://ozgurgulerx.github.io/inference-engineering-book/
+
 This repository contains the source for a Quarto book on inference engineering:
 the craft of designing, operating, measuring, and improving production LLM
 inference systems from data center constraints through hardware, runtimes,
