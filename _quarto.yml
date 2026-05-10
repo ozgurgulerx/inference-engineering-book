@@ -3,8 +3,8 @@ project:
   output-dir: _book
 
 book:
-  title: "Inference Engineering"
-  subtitle: "From data center design to production LLM inference systems"
+  title: "Building an AI Data Center from Scratch"
+  subtitle: "Inference engineering, AI hardware, and data center design for production AI systems"
   author: "Ozgur Guler"
   date: "2026-05-10"
   cover-image: assets/cover.svg

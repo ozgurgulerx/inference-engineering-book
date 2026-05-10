@@ -1,11 +1,9 @@
-# Inference Engineering
+# Building an AI Data Center from Scratch
 
 Live book: https://ozgurgulerx.github.io/inference-engineering-book/
 
-This repository contains the source for a Quarto book on inference engineering:
-the craft of designing, operating, measuring, and improving production LLM
-inference systems from data center constraints through hardware, runtimes,
-models, benchmarks, and production operations.
+This repository contains the source for a Quarto book on inference engineering,
+AI hardware, and data center design for production AI systems.
 
 ## Book Structure
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2400" viewBox="0 0 1600 2400" role="img" aria-labelledby="title desc">
-  <title id="title">Inference Engineering book cover</title>
-  <desc id="desc">A modern technical book cover showing the inference stack from data center infrastructure through accelerators, kernels, model mechanics, serving runtimes, and production operations.</desc>
+  <title id="title">Building an AI Data Center from Scratch book cover</title>
+  <desc id="desc">A modern technical book cover showing the AI data center stack from data center infrastructure through accelerators, kernels, inference engineering, serving runtimes, and production operations.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#101522"/>
@@ -37,13 +37,15 @@
   </g>
 
   <text x="132" y="196" fill="#9fb3c8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="42" letter-spacing="8">SYSTEMS BOOK</text>
-  <text x="128" y="390" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="138" font-weight="800">
-    <tspan x="128" dy="0">Inference</tspan>
-    <tspan x="128" dy="150">Engineering</tspan>
+  <text x="128" y="348" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="104" font-weight="800">
+    <tspan x="128" dy="0">Building an AI</tspan>
+    <tspan x="128" dy="122">Data Center</tspan>
+    <tspan x="128" dy="122">from Scratch</tspan>
   </text>
-  <text x="132" y="740" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="48">
-    <tspan x="132" dy="0">From data center design to</tspan>
-    <tspan x="132" dy="70">production LLM systems</tspan>
+  <text x="132" y="790" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="42">
+    <tspan x="132" dy="0">Inference engineering, AI hardware,</tspan>
+    <tspan x="132" dy="64">and data center design for</tspan>
+    <tspan x="132" dy="64">production AI systems</tspan>
   </text>
 
   <g transform="translate(132 950)" filter="url(#softShadow)">

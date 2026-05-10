@@ -1,17 +1,17 @@
 # Preface
 
 ::: {.book-landing}
-![](assets/cover.svg){.book-cover fig-alt="Inference Engineering book cover showing the stack from data center design to production LLM systems."}
+![](assets/cover.svg){.book-cover fig-alt="Building an AI Data Center from Scratch book cover showing the stack from data center design to production AI systems."}
 
 ::: {.book-landing-copy}
 <p class="book-kicker">Systems book</p>
 
-Inference engineering is the applied discipline of making model execution work
-inside real systems.
+Building an AI data center from scratch means connecting physical facility
+decisions to hardware architecture, inference runtimes, model mechanics, and
+production operations.
 
-<p class="book-deck">This book follows the path from power, cooling, racks, and
-networks to hardware architecture, transformer mechanics, kernels, serving
-runtimes, benchmarks, and production operations.</p>
+<p class="book-deck">Inference engineering, AI hardware, and data center design
+for production AI systems.</p>
 :::
 :::
 
