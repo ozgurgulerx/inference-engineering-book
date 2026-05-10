@@ -1,0 +1,11 @@
+.quarto/
+_book/
+.venv/
+.local-home/
+.local-tools/
+__pycache__/
+.pytest_cache/
+.DS_Store
+
+/.quarto/
+**/*.quarto_ipynb

@@ -1,0 +1,39 @@
+# AI Data Center Design Space
+
+AI inference starts with a physical constraint: every token consumes power,
+cooling, network capacity, memory bandwidth, accelerator time, and operational
+attention.
+
+## Chapter Job
+
+Build the vocabulary required to compare data center choices for inference
+systems.
+
+## Design Axes
+
+| Axis | Design choice | Inference consequence |
+| --- | --- | --- |
+| Facility | Colocation, hyperscale region, managed GPU cloud | Control, speed, procurement risk |
+| Power | Rack density, redundancy, power capping | Maximum accelerator density and burst behavior |
+| Cooling | Air, rear-door heat exchangers, direct liquid, immersion | Rack density, reliability, maintenance model |
+| Cluster | Single node, rack-scale, pod-scale, multi-region | Scheduling, fault domains, data movement |
+| Network | Ethernet, InfiniBand, proprietary fabric | Collective performance and tail latency |
+| Storage | Local NVMe, shared filesystem, object store | Model load time and checkpoint movement |
+| Operations | Bare metal, Kubernetes, managed inference platform | Control surface and team burden |
+
+## Compare/Contrast Pattern
+
+For every data center design choice, ask:
+
+- What workload shape does this favor?
+- What failure mode does it create?
+- What operational skill does it require?
+- What measurement proves it works?
+- What gets harder when the cluster grows?
+
+## What This Enables Later
+
+The rest of the book repeatedly returns to this chapter. Batching, KV cache,
+tensor parallelism, disaggregated prefill/decode, and specialized systems only
+make sense when the physical envelope is visible.
+

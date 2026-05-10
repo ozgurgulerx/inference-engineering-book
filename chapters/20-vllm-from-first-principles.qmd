@@ -1,0 +1,35 @@
+# vLLM From First Principles
+
+vLLM is the book's main hands-on serving engine.
+
+## Chapter Job
+
+Teach vLLM as an inference systems artifact: scheduler, memory manager, API
+server, and performance surface.
+
+## Topics
+
+- OpenAI-compatible server.
+- Offline batch inference.
+- Continuous batching.
+- PagedAttention.
+- KV cache allocation.
+- Prefix caching.
+- Tensor parallelism.
+- Quantization support.
+- Sampling configuration.
+- Streaming.
+- Metrics endpoint.
+- Common OOM and capacity failures.
+
+## Lab Path
+
+The reader should implement:
+
+1. Serve a small model.
+2. Run a streaming probe.
+3. Measure TTFT and total latency.
+4. Change concurrency and output length.
+5. Enable prefix caching where applicable.
+6. Capture metrics and compare results.
+

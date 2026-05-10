@@ -1,0 +1,34 @@
+# Specialized Inference Systems: SambaNova, Cerebras, Groq
+
+Specialized systems change the architecture conversation. They are not just
+faster GPUs; they often expose a different execution model.
+
+## Chapter Job
+
+Compare specialized inference architectures by workload fit, software contract,
+scaling model, and operational tradeoff.
+
+## Systems to Cover
+
+- SambaNova-style dataflow architecture.
+- Cerebras-style wafer-scale architecture.
+- Groq-style deterministic token pipeline and LPU framing.
+
+## Comparison Axes
+
+- Programming model.
+- Compiler path.
+- Memory model.
+- Network or scale-out model.
+- Latency profile.
+- Throughput profile.
+- Model compatibility.
+- Serving interface.
+- Deployment model.
+- Operational maturity.
+
+## Rule
+
+This chapter must separate vendor claims from measured behavior. Each system
+gets a source-verified architecture summary and a workload-fit analysis.
+

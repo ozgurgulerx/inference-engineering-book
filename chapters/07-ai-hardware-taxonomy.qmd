@@ -1,0 +1,44 @@
+# AI Hardware Taxonomy
+
+Inference hardware is not one category. GPUs, CPUs, AI ASICs, LPUs, wafer-scale
+systems, and dataflow machines expose different tradeoffs.
+
+## Chapter Job
+
+Give the reader a hardware map before going vendor by vendor.
+
+## Hardware Families
+
+- General-purpose CPUs.
+- GPUs.
+- Integrated CPU-GPU systems.
+- AI ASICs.
+- Dataflow accelerators.
+- Wafer-scale systems.
+- LPU-style deterministic token systems.
+- Edge accelerators.
+
+## Comparison Axes
+
+- Memory capacity.
+- Memory bandwidth.
+- Compute throughput.
+- Interconnect.
+- Precision support.
+- Software maturity.
+- Compiler model.
+- Serving framework support.
+- Operational availability.
+- Workload fit.
+
+## Inference Lens
+
+Hardware should be evaluated by workload phase:
+
+- Prefill-heavy traffic.
+- Decode-heavy traffic.
+- Long-context traffic.
+- MoE routing and expert load balance.
+- Batch/offline inference.
+- Real-time interactive streaming.
+

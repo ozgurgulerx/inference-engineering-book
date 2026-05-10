@@ -1,0 +1,27 @@
+# AMD Architecture Patterns
+
+AMD should be treated as a serious inference option with its own hardware and
+software tradeoffs, not as a footnote.
+
+## Chapter Job
+
+Map AMD CPU and GPU architecture patterns that affect inference deployment.
+
+## Topics
+
+- EPYC host CPU role in dense inference nodes.
+- NUMA, memory channels, PCIe lanes, and host-side throughput.
+- Instinct GPU family as an accelerator option.
+- HBM capacity and bandwidth patterns.
+- ROCm software stack maturity and compatibility questions.
+- Framework support and operational gaps to test directly.
+- Multi-GPU and multi-node communication considerations.
+
+## Comparison Questions
+
+- Which workloads are attractive on AMD hardware?
+- Which software path is mature enough for production?
+- What runtime and kernel support is available?
+- What is the debugging story?
+- How does cost/performance compare after operational effort is counted?
+

@@ -1,0 +1,35 @@
+# Serving Engines and Runtime Map
+
+Serving engines are where model mechanics meet scheduler policy.
+
+## Chapter Job
+
+Map the runtime ecosystem and explain why the book uses a framework-first path.
+
+## Runtime Families
+
+- vLLM.
+- SGLang.
+- TensorRT-LLM.
+- Triton Inference Server.
+- Text Generation Inference.
+- llama.cpp and local runtimes.
+- Managed provider runtimes.
+
+## Comparison Axes
+
+- Scheduler design.
+- KV cache management.
+- Continuous batching.
+- Prefix caching.
+- Structured output and tool support.
+- Quantization support.
+- Tensor and pipeline parallel support.
+- Observability hooks.
+- Deployment maturity.
+
+## Book Default
+
+The primary implementation path is vLLM because it is practical, visible, widely
+used, and exposes the right concepts for learning.
+

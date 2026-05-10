@@ -1,0 +1,33 @@
+# Disaggregated Inference Architectures
+
+Disaggregation separates parts of the inference path so each can scale and
+optimize differently.
+
+## Chapter Job
+
+Explain why systems separate prefill, decode, memory, routing, and serving
+responsibilities.
+
+## Patterns
+
+- Prefill/decode disaggregation.
+- KV cache movement or reuse.
+- Router and scheduler separation.
+- Multi-tier serving.
+- CPU offload.
+- Remote memory or cache services.
+- Specialized hardware per phase.
+
+## Tradeoffs
+
+- Higher utilization versus higher coordination complexity.
+- Better specialization versus more network dependence.
+- Lower cost at scale versus harder debugging.
+- Cleaner resource pools versus new failure modes.
+
+## Placement
+
+This chapter belongs before the specialized system survey because it gives the
+reader a general vocabulary for architectures from SambaNova, Cerebras, Groq,
+and related systems.
+

@@ -1,0 +1,28 @@
+# Evals and Regression Testing
+
+Inference changes can be technically faster and product-worse. Evals prevent
+that from becoming normal.
+
+## Chapter Job
+
+Define the release gates for prompt, model, runtime, quantization, and hardware
+changes.
+
+## Eval Layers
+
+- Unit tests for prompt assembly.
+- Schema validity tests.
+- Golden examples.
+- Task-specific graders.
+- Human review.
+- Safety and policy tests.
+- Latency and cost regression tests.
+- Shadow traffic.
+
+## Release Principle
+
+Every inference optimization needs two results:
+
+- Did it improve the target system metric?
+- Did it preserve or improve task quality?
+

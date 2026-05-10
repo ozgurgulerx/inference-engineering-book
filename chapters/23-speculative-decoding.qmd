@@ -1,0 +1,28 @@
+# Speculative Decoding
+
+Speculative decoding is a good example of an advanced method that only makes
+sense when model, runtime, and hardware behavior are understood together.
+
+## Chapter Job
+
+Explain draft/target decoding, when it helps, and how to measure it.
+
+## Topics
+
+- Draft model.
+- Target model.
+- Acceptance rate.
+- Verification cost.
+- Latency speedup.
+- Quality preservation.
+- Workload sensitivity.
+- Runtime support.
+
+## Measurement Questions
+
+- What is the acceptance rate?
+- Does TTFT improve, total latency improve, or both?
+- Does speedup hold at concurrency?
+- Does the draft model consume scarce hardware capacity?
+- Does implementation complexity justify the win?
+

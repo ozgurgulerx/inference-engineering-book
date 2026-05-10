@@ -1,0 +1,32 @@
+# Configurable Hardware Surfaces
+
+Inference engineers rarely redesign silicon, but they do configure the system
+that exposes the silicon.
+
+## Chapter Job
+
+List the hardware and system-level controls an inference engineer can actually
+change.
+
+## Configuration Surfaces
+
+- GPU clocks and power limits.
+- MIG or partitioning modes where available.
+- NUMA pinning.
+- CPU affinity.
+- Huge pages and memory behavior.
+- PCIe and NIC placement.
+- Driver, CUDA, ROCm, oneAPI, or vendor runtime versions.
+- Container image and kernel module compatibility.
+- Precision and quantization choices.
+- Tensor parallel and pipeline parallel layout.
+- Batch size and scheduler knobs.
+- KV cache allocation.
+- Model placement and warmup policy.
+
+## Discipline
+
+Every configuration change needs a before/after benchmark and a rollback path.
+The book treats configuration as an experimental system, not as a bag of tuning
+tips.
+

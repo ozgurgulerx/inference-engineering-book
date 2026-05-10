@@ -1,0 +1,31 @@
+# Multitenancy and QoS
+
+Inference platforms become hard when many users, models, and workloads share the
+same capacity.
+
+## Chapter Job
+
+Explain fairness, isolation, scheduling, and degradation in multi-tenant
+inference systems.
+
+## Topics
+
+- Tenant-aware queues.
+- Priority classes.
+- Rate limits.
+- Admission control.
+- Deadline-aware scheduling.
+- Per-tenant cost attribution.
+- Noisy-neighbor failures.
+- Model pool isolation.
+- Shared versus dedicated capacity.
+- Graceful degradation.
+
+## Artifact
+
+Design a QoS policy for three tenants:
+
+- Interactive product traffic.
+- Internal batch jobs.
+- Evaluation workloads.
+

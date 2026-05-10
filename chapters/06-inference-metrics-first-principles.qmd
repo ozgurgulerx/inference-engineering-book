@@ -1,0 +1,48 @@
+# Metrics First: The Inference Control Plane
+
+Metrics are the control plane for inference engineering. Without them, hardware
+and runtime discussions collapse into preference.
+
+## Chapter Job
+
+Define the metrics that let engineers compare hardware, runtimes, model
+architectures, and deployment designs.
+
+## Core Metrics
+
+- Time to first token.
+- Inter-token latency.
+- Time to last token.
+- End-to-end product latency.
+- Tokens per second per request.
+- Aggregate tokens per second.
+- Requests per second.
+- Queue time.
+- Prefill time.
+- Decode time.
+- KV cache memory.
+- Accelerator utilization.
+- CPU utilization.
+- Network utilization.
+- Cost per request.
+- Cost per successful task.
+- Quality or task-success score.
+
+## Measurement Rule
+
+Every performance claim should name:
+
+- Model.
+- Hardware.
+- Runtime.
+- Precision or quantization.
+- Prompt length distribution.
+- Output length distribution.
+- Batch and concurrency settings.
+- Dataset or traffic source.
+- Percentile latency, not only averages.
+
+## Artifact
+
+The reader creates a benchmark card that can be reused throughout the book.
+

@@ -1,0 +1,34 @@
+# Case Studies and Capstones
+
+The book should end with built systems, not just explanations.
+
+## Chapter Job
+
+Turn the book into public artifacts that prove engineering judgment.
+
+## Case Studies
+
+- Interactive chat assistant with streaming SLOs.
+- Long-context analyst workflow.
+- RAG versus long-context comparison.
+- Document extraction with structured output.
+- Multi-tenant vLLM endpoint.
+- Speculative decoding experiment.
+- Runpod benchmark report.
+- Specialized architecture comparison.
+- Cost and capacity planning memo.
+
+## Capstone Format
+
+Each capstone should include:
+
+- Problem statement.
+- Inference path.
+- Hardware and runtime choice.
+- Benchmark setup.
+- Results.
+- Quality evaluation.
+- Cost model.
+- Failure modes.
+- What changed after measurement.
+

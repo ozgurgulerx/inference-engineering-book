@@ -1,0 +1,32 @@
+# MoE, State Space, and Specialized Models
+
+Not every model stresses the inference stack in the same way.
+
+## Chapter Job
+
+Explain why model architecture changes serving behavior.
+
+## MoE Topics
+
+- Expert routing.
+- Active parameters versus total parameters.
+- Load balance.
+- Expert parallelism.
+- Network pressure.
+- Batch composition.
+- Tail latency risks.
+
+## State-Space and Alternative Architectures
+
+- Why non-attention architectures are attractive for long sequences.
+- What changes in memory and compute profile.
+- What serving engines need to support.
+
+## Specialized Models
+
+- Embedding models.
+- Rerankers.
+- Vision-language models.
+- Speech models.
+- Small language models as probes and production workhorses.
+

@@ -1,0 +1,37 @@
+# Cost and Capacity Planning
+
+Cost is a systems metric. It depends on model, workload, hardware, scheduler,
+utilization, and failure behavior.
+
+## Chapter Job
+
+Give the reader a capacity and unit-economics method for inference systems.
+
+## Inputs
+
+- Request rate.
+- Prompt length distribution.
+- Output length distribution.
+- Model mix.
+- Concurrency.
+- Target SLO.
+- Accelerator cost.
+- Utilization.
+- Retry rate.
+- Cache hit rate.
+- Quality threshold.
+
+## Outputs
+
+- Cost per request.
+- Cost per successful task.
+- Required accelerators.
+- Burst headroom.
+- Failure reserve.
+- Per-tenant margin or budget.
+
+## Artifact
+
+A capacity model that converts product traffic into token load, hardware need,
+and cost.
+

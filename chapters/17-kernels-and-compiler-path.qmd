@@ -1,0 +1,31 @@
+# Kernels and Compiler Path
+
+Kernel engineering matters because inference is often limited by memory movement
+and launch overhead, not just arithmetic throughput.
+
+## Chapter Job
+
+Give the reader enough kernel and compiler literacy to understand runtime
+choices without becoming a kernel specialist.
+
+## Topics
+
+- What a kernel is.
+- Kernel launch overhead.
+- Memory coalescing.
+- Tiling.
+- Fused operations.
+- Attention kernels.
+- GEMM kernels.
+- Sampling kernels.
+- Triton.
+- CUTLASS-style libraries.
+- `torch.compile` and graph capture.
+- TensorRT-LLM-style optimized paths.
+
+## Depth Boundary
+
+This chapter should teach how to reason about kernels, inspect whether optimized
+kernels are being used, and understand why a runtime gets faster. It does not
+need to teach full CUDA kernel authorship.
+

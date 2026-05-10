@@ -1,0 +1,37 @@
+# Benchmarking Harness
+
+Benchmarks are the book's source of truth.
+
+## Chapter Job
+
+Define a harness that can compare runtimes, hardware, models, and settings
+without changing the question each time.
+
+## Harness Components
+
+- Prompt dataset.
+- Output length control.
+- Concurrency driver.
+- Streaming probe.
+- Metrics collector.
+- Result summarizer.
+- Environment snapshot.
+- Cost calculator.
+- Plotting script.
+
+## Benchmark Types
+
+- Single request trace.
+- Concurrency sweep.
+- Prompt-length sweep.
+- Output-length sweep.
+- Quantization comparison.
+- Prefix-cache experiment.
+- Multi-tenant load test.
+- Failure and retry drill.
+
+## Source Link
+
+This chapter should promote material from the local `inference-journal`
+benchmarking and latency/SLO labs.
+

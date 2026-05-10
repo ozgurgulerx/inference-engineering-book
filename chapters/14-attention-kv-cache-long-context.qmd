@@ -1,0 +1,28 @@
+# Attention, KV Cache, and Long Context
+
+Attention is where model architecture becomes an inference systems problem.
+
+## Chapter Job
+
+Connect attention mechanisms to memory footprint, latency, batching, and long
+context behavior.
+
+## Topics
+
+- Multi-head attention.
+- Grouped-query attention.
+- Multi-query attention.
+- KV cache allocation.
+- KV cache fragmentation.
+- Prefix caching.
+- Sliding window and long-context strategies.
+- RAG versus long-context tradeoffs.
+- Why context length changes throughput and cost.
+
+## Practical Questions
+
+- How much KV memory does this workload need?
+- Does the serving runtime page or compact KV cache efficiently?
+- Does prefix reuse matter for this traffic?
+- Is long context solving the product problem or hiding retrieval design debt?
+

@@ -1,0 +1,44 @@
+# Source Map
+
+This appendix maps existing local `inference-journal` material into the book.
+
+## Local Source Corpus
+
+The local journal at `/Users/ozgurguler/Developer/Projects/inference-journal`
+contains raw daily logs, topic notes, benchmarks, and a prior mdBook outline.
+
+## Mapped Topics
+
+| Journal source | Book destination |
+| --- | --- |
+| `days/day-002-GPU-node-bring-up` | CPU-GPU node architecture, configurable hardware surfaces |
+| `days/day-003-vLLM-capacity-and-OOM` | vLLM, benchmarking, capacity planning |
+| `days/day-004-quantization-vs-bf16` | Quantization and numerics |
+| `days/day-005-OS-and-NUMA-node-hardening` | CPU-GPU node architecture, hardware configuration |
+| `days/day-006-slm-memory` | Memory behavior, KV cache, small model probes |
+| `days/day-007-vllm-runtime-probes` | vLLM, TTFT, prefix caching, batching |
+| `days/day-008-groq-dc-dimensioning` | Data center design, specialized systems, Groq comparison |
+| `days/day-009-latency-metrics-and-slo-lab` | Metrics, SLOs, benchmarking harness |
+| `days/day-010-attention-architecture-gqa-mqa` | Attention and KV cache |
+| `days/day-011-runtime-shootout` | Runtime map and serving engine comparisons |
+| `days/day-012-long-context-vs-rag` | Long context, RAG tradeoffs |
+| `days/day-013-speculative-decoding` | Speculative decoding |
+| `days/day-014-multi-gpu-scaling` | Multi-GPU and multi-node scaling |
+| `days/day-015-multi-tenant-qos` | Multitenancy and QoS |
+| `days/day-016-cost-efficiency-accounting` | Cost and capacity planning |
+| `days/day-017-reliability-guardrails` | Reliability and guardrails |
+| `days/day-018-alignment-e2e-demo` | RL and policy inference, evals |
+| `days/day-019-state-space-or-moe` | MoE, state-space, specialized model mechanics |
+| `days02/` full-stack map | Overall book structure and milestone progression |
+| `topics/vllm` | vLLM implementation chapters |
+| `topics/quantization` | Quantization chapter |
+| `topics/tensorrt-llm` | Runtime map and kernel/compiler path |
+| `topics/serving-patterns` | Production and advanced architecture chapters |
+
+## GitHub Repo Note
+
+The requested GitHub repository `ozgurgulerx/inference-engineering` did not
+resolve through the GitHub CLI during setup. If it is private, renamed, or under
+a different owner, update this appendix after adding the remote or cloning it
+locally.
+

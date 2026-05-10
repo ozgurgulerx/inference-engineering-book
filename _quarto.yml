@@ -1,0 +1,82 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Inference Engineering"
+  subtitle: "From data center design to production LLM inference systems"
+  author: "Ozgur Guler"
+  date: "2026-05-10"
+  cover-image: assets/cover.svg
+  repo-url: https://github.com/ozgurgulerx/inference-engineering-book
+  repo-actions: [edit, issue]
+  page-navigation: true
+  search: true
+  chapters:
+    - index.qmd
+    - chapters/01-executive-map.qmd
+    - part: "Part I: AI Data Center Design"
+      chapters:
+        - chapters/02-ai-data-center-design-space.qmd
+        - chapters/03-power-cooling-rack-density.qmd
+        - chapters/04-ai-networking-and-cluster-topology.qmd
+        - chapters/05-data-center-stack-tradeoffs.qmd
+    - part: "Part II: Silicon, Nodes, and Hardware Architecture"
+      chapters:
+        - chapters/06-inference-metrics-first-principles.qmd
+        - chapters/07-ai-hardware-taxonomy.qmd
+        - chapters/08-cpu-gpu-node-architecture.qmd
+        - chapters/09-configurable-hardware-surfaces.qmd
+        - chapters/10-nvidia-generations-and-patterns.qmd
+        - chapters/11-intel-architectures-in-detail.qmd
+        - chapters/12-amd-architecture-patterns.qmd
+    - part: "Part III: Model Mechanics That Matter for Inference"
+      chapters:
+        - chapters/13-transformer-inference-mechanics.qmd
+        - chapters/14-attention-kv-cache-long-context.qmd
+        - chapters/15-moe-state-space-and-specialized-models.qmd
+        - chapters/16-rl-and-policy-inference.qmd
+    - part: "Part IV: Kernels, Compilers, and Runtime Primitives"
+      chapters:
+        - chapters/17-kernels-and-compiler-path.qmd
+        - chapters/18-memory-bandwidth-quantization-numerics.qmd
+    - part: "Part V: Framework-First Implementation"
+      chapters:
+        - chapters/19-serving-engines-and-runtime-map.qmd
+        - chapters/20-vllm-from-first-principles.qmd
+        - chapters/21-runpodai-practical-deployment.qmd
+        - chapters/22-benchmarking-harness.qmd
+    - part: "Part VI: Advanced Inference Architectures"
+      chapters:
+        - chapters/23-speculative-decoding.qmd
+        - chapters/24-disaggregated-inference-architectures.qmd
+        - chapters/25-specialized-inference-systems.qmd
+        - chapters/26-multi-gpu-and-multi-node-scaling.qmd
+        - chapters/27-multitenancy-and-qos.qmd
+    - part: "Part VII: Production Inference Engineering"
+      chapters:
+        - chapters/28-evals-and-regression-testing.qmd
+        - chapters/29-observability-reliability-security.qmd
+        - chapters/30-cost-and-capacity-planning.qmd
+        - chapters/31-case-studies-and-capstones.qmd
+  appendices:
+    - appendices/source-map.qmd
+    - appendices/structure-review.qmd
+    - appendices/glossary.qmd
+    - appendices/checklists.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    toc: true
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+
+execute:
+  freeze: auto
+  warning: false
+  message: false

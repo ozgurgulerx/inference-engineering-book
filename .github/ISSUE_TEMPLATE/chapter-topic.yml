@@ -1,0 +1,31 @@
+name: Chapter or topic
+description: Propose a chapter section, lab, diagram, or checklist.
+title: "[Topic]: "
+labels:
+  - content
+body:
+  - type: textarea
+    id: reader-outcome
+    attributes:
+      label: Reader outcome
+      description: What should the reader be able to do after this topic?
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Chapter section
+        - Lab
+        - Diagram
+        - Checklist
+        - Case study
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Add rough bullets, examples, references, or implementation details.
+

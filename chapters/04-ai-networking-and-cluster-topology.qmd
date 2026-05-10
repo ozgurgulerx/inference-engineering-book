@@ -1,0 +1,38 @@
+# AI Networking and Cluster Topology
+
+The network decides whether multiple accelerators behave like one system or like
+several expensive islands.
+
+## Chapter Job
+
+Compare networking choices for inference: node-local traffic, multi-GPU
+collectives, multi-node scaling, storage movement, and user-facing serving
+traffic.
+
+## Traffic Classes
+
+- User request traffic.
+- Model weight and checkpoint movement.
+- Tensor-parallel and pipeline-parallel communication.
+- KV cache or activation movement in disaggregated systems.
+- Observability and control-plane traffic.
+- Storage reads for model load and warmup.
+
+## Topology Concepts
+
+- PCIe root complex.
+- NUMA locality.
+- NVLink-class local accelerator fabrics.
+- Ethernet and InfiniBand fabrics.
+- Fat-tree, rail-optimized, and pod-level designs.
+- Oversubscription and failure domains.
+
+## Practical Question
+
+For a given model and target SLO, decide whether the system should scale:
+
+- Up inside one node.
+- Across multiple accelerators in one node.
+- Across multiple nodes.
+- Across regions or providers.
+

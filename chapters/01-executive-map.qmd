@@ -1,0 +1,44 @@
+# Executive Map
+
+The book follows one system from the ground up: the data center that powers the
+cluster, the node that runs the model, the accelerator that executes kernels,
+the runtime that schedules tokens, and the product service that turns those
+tokens into a reliable user experience.
+
+## The Stack
+
+```{mermaid}
+flowchart TB
+  A[Power, cooling, and facility constraints]
+  B[Racks, clusters, and data center network]
+  C[CPU, memory, PCIe, GPU, accelerator, and NIC]
+  D[Kernels, compilers, runtimes, and serving engines]
+  E[Model mechanics: attention, KV cache, MoE, decoding]
+  F[Framework-first implementation: vLLM, Runpod, benchmarks]
+  G[Production system: evals, SLOs, observability, cost, reliability]
+
+  A --> B --> C --> D --> E --> F --> G
+```
+
+## Reader Outcome
+
+The reader should finish with the ability to:
+
+- Compare AI data center design choices from cooling to networking.
+- Explain how hardware architecture shapes inference latency and throughput.
+- Read model architecture papers through an inference lens.
+- Deploy and benchmark an LLM server with a framework-first workflow.
+- Diagnose bottlenecks across CPU, GPU, memory, network, runtime, and model.
+- Evaluate advanced approaches such as speculative decoding and disaggregation.
+- Operate inference services with measurable cost, quality, and reliability.
+
+## Depth Contract
+
+This is not a chip-design textbook and not a prompt-engineering handbook. The
+depth target is systems literacy for inference engineers:
+
+- Deep where choices change latency, throughput, reliability, or cost.
+- Practical where the reader needs a runnable workflow.
+- Comparative where vendors and architectures differ.
+- Explicit when a topic should be source-verified before publication.
+

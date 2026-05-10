@@ -1,0 +1,35 @@
+# NVIDIA Generations and Patterns
+
+NVIDIA hardware is the default reference point for much of the inference
+ecosystem, so the book needs a generation-aware map.
+
+## Chapter Job
+
+Compare NVIDIA generations by the patterns that matter for inference rather than
+memorizing product names.
+
+## Topics
+
+- CUDA programming model as the dominant software contract.
+- Tensor cores and precision evolution.
+- HBM capacity and bandwidth.
+- NVLink and node-scale fabrics.
+- MIG and partitioning concepts.
+- Transformer Engine-style precision trends.
+- Blackwell-generation themes to source-verify before publication.
+- How vLLM, TensorRT-LLM, Triton, and CUDA kernels sit on this stack.
+
+## Pattern Questions
+
+- What changed in memory capacity?
+- What changed in memory bandwidth?
+- What changed in interconnect?
+- What changed in supported precision?
+- What changed in software path maturity?
+- What new workload class became practical?
+
+## Artifact
+
+Create a generation comparison table with source links and inference-relevant
+columns only.
+

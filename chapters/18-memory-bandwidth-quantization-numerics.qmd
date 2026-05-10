@@ -1,0 +1,32 @@
+# Memory Bandwidth, Quantization, and Numerics
+
+Many inference optimizations are memory optimizations wearing a model name.
+
+## Chapter Job
+
+Explain how precision and quantization change memory, speed, quality, and
+hardware compatibility.
+
+## Topics
+
+- BF16, FP16, FP8, INT8, INT4, and mixed precision.
+- Weight-only quantization.
+- Activation quantization.
+- KV cache quantization.
+- Calibration.
+- Quality evaluation.
+- Bandwidth versus compute bottlenecks.
+- Quantization support across runtimes and hardware.
+
+## Discipline
+
+No quantization claim is complete without:
+
+- Model.
+- Dataset or task.
+- Hardware.
+- Runtime.
+- Precision format.
+- Latency and throughput result.
+- Quality regression result.
+

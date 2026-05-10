@@ -1,0 +1,32 @@
+# Transformer Inference Mechanics
+
+The hardware chapters explain where the work runs. This chapter explains what
+the work is.
+
+## Chapter Job
+
+Explain transformer inference in the terms an infrastructure engineer needs:
+prefill, decode, memory movement, KV cache, and batching.
+
+## Core Mechanics
+
+- Tokenization.
+- Embedding lookup.
+- Transformer block execution.
+- Attention.
+- MLP.
+- Normalization.
+- Logits and sampling.
+- Prefill phase.
+- Decode phase.
+- Streaming response.
+
+## Why Prefill and Decode Differ
+
+Prefill processes a prompt in parallel. Decode generates tokens one step at a
+time. Their bottlenecks, batching behavior, and memory pressure differ.
+
+## Artifact
+
+The reader creates a prefill/decode timeline for one model serving request.
+

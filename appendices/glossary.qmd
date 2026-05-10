@@ -1,0 +1,62 @@
+# Glossary
+
+Batching
+: Combining multiple inference requests into one model-server operation.
+
+Continuous batching
+: A serving-engine scheduling technique that admits and completes requests
+dynamically rather than waiting for a fixed batch to finish.
+
+Context assembly
+: Building the information sent to the model from user input, system state,
+retrieval, tools, and templates.
+
+Decode
+: The token-by-token generation phase after the prompt has been processed.
+
+Disaggregated inference
+: An architecture that separates phases or responsibilities such as prefill,
+decode, routing, cache, and memory so they can scale independently.
+
+Eval
+: A repeatable measurement of model or system behavior against examples,
+criteria, or human judgment.
+
+Expert parallelism
+: A scaling strategy used by mixture-of-experts models where experts are placed
+across devices or nodes.
+
+Inference path
+: The runtime sequence from user request to model output to product response.
+
+Inter-token latency
+: The time between streamed output tokens during decode.
+
+KV cache
+: Cached key/value tensors used by transformer decoders to avoid recomputing
+attention over previous tokens.
+
+MoE
+: Mixture of experts, a model architecture where a router activates a subset of
+expert networks for a given token or request.
+
+Prefill
+: The phase that processes the input prompt before token-by-token generation.
+
+Prompt contract
+: The versioned agreement describing input shape, instructions, tool access,
+output schema, and expected behavior.
+
+QoS
+: Quality of service; the policy layer that manages priority, fairness,
+admission, and degradation across tenants or workloads.
+
+Speculative decoding
+: A decoding method where a draft model proposes tokens and a target model
+verifies them to reduce generation latency when acceptance is high.
+
+Time to first token
+: Time from request start to the first streamed output token.
+
+Time to last token
+: Time from request start to the completed model output.

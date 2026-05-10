@@ -1,0 +1,32 @@
+# RL and Policy Inference
+
+RL-related inference workloads often look different from chatbot serving.
+
+## Chapter Job
+
+Explain advanced inference patterns that appear in RL, alignment, simulation,
+search, and policy evaluation.
+
+## Workload Patterns
+
+- Many short rollouts.
+- Batched policy evaluation.
+- Tree search or verifier-guided generation.
+- Reward model scoring.
+- Rejection sampling.
+- Self-play or simulation loops.
+- Online policy serving.
+
+## Systems Consequences
+
+- Small latency differences multiply across rollouts.
+- Batch shape can be highly irregular.
+- CPU-side orchestration can dominate accelerator time.
+- Caching and reuse may be possible across search branches.
+- Quality metrics need task-level outcomes, not only token-level speed.
+
+## Bridge
+
+The next section moves from model mechanics to the kernels and compiler paths
+that make these workloads fast enough to matter.
+

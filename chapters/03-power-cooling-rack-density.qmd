@@ -1,0 +1,39 @@
+# Power, Cooling, and Rack Density
+
+Inference clusters are constrained by heat and power before they are constrained
+by architectural taste.
+
+## Chapter Job
+
+Explain how power delivery and cooling choices shape AI hardware density,
+availability, and operating cost.
+
+## Cooling Choices
+
+| Cooling model | Why teams choose it | Tradeoff to inspect |
+| --- | --- | --- |
+| Air cooling | Simpler operations and broad facility compatibility | Lower practical rack density |
+| Rear-door heat exchanger | Transitional path for denser racks | Integration and airflow discipline |
+| Direct-to-chip liquid cooling | Higher density and thermal headroom | Facility readiness and maintenance |
+| Immersion cooling | High-density thermal envelope | Ecosystem maturity and service model |
+
+## Inference-Specific Questions
+
+- Does the workload create steady load or bursty load?
+- Can the facility support sustained accelerator utilization?
+- What happens when thermal throttling starts?
+- Are power caps configured intentionally or discovered during incidents?
+- Can the same rack support both prefill-heavy and decode-heavy workloads?
+
+## Artifact
+
+Create a rack design card:
+
+- Rack density target.
+- Accelerator count.
+- Power envelope.
+- Cooling method.
+- Network ports per node.
+- Failure domain.
+- Measured utilization assumption.
+

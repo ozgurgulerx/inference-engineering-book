@@ -1,0 +1,61 @@
+# Checklists
+
+## Data Center Design Review
+
+- Workload class is defined.
+- Rack power envelope is documented.
+- Cooling method and density target are documented.
+- Network topology is mapped.
+- Storage and model-load path are documented.
+- Failure domains are named.
+- Benchmark evidence exists for the proposed deployment shape.
+
+## Hardware Selection
+
+- Model size and context length are known.
+- Precision and quantization targets are known.
+- Prefill and decode workload mix is estimated.
+- HBM capacity and bandwidth needs are estimated.
+- CPU, memory, PCIe, NIC, and accelerator topology are reviewed.
+- Runtime support is verified.
+- Cost and availability are included in the decision.
+
+## New Inference Feature
+
+- Product owner is named.
+- Inference path is drawn.
+- Prompt contract is versioned.
+- Output schema is validated.
+- Latency budget is defined.
+- Cost owner is defined.
+- Eval set exists.
+- Logs and traces include request IDs.
+- Sensitive data handling is documented.
+- Fallback behavior is tested.
+
+## Model or Prompt Change
+
+- Change reason is documented.
+- Eval run is attached to the PR.
+- Regression failures are reviewed.
+- Rollout percentage is defined.
+- Dashboard is linked.
+- Rollback path is known.
+
+## Benchmark Report
+
+- Model, runtime, hardware, and versions are recorded.
+- Prompt and output distributions are described.
+- Concurrency and batch settings are recorded.
+- TTFT, inter-token latency, total latency, and throughput are included.
+- Quality or task-success check is included.
+- Cost estimate is included.
+- Raw results are saved.
+
+## Incident Review
+
+- User impact is stated in product terms.
+- Failed boundary is identified.
+- Missing signal is named.
+- Preventive test or alert is added.
+- Owner and due date are assigned.

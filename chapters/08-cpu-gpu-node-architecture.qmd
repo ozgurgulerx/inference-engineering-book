@@ -1,0 +1,46 @@
+# CPU-GPU Node Architecture
+
+An inference node is a system of CPUs, memory, accelerators, NICs, storage, and
+software queues. The GPU is the center of gravity, but it is not the whole
+machine.
+
+## Chapter Job
+
+Explain how a single node moves work from process to CPU to GPU and back.
+
+## Node Components
+
+- CPU sockets.
+- NUMA domains.
+- System memory.
+- PCIe topology.
+- GPUs or accelerators.
+- GPU memory.
+- NICs.
+- Local NVMe.
+- Drivers and runtime libraries.
+- Container and orchestration layer.
+
+## Critical Paths
+
+```{mermaid}
+flowchart LR
+  A[HTTP request] --> B[Runtime process]
+  B --> C[Tokenizer and scheduler on CPU]
+  C --> D[Host memory]
+  D --> E[PCIe or local fabric]
+  E --> F[Accelerator memory]
+  F --> G[Kernels]
+  G --> H[Generated tokens]
+  H --> C
+  C --> I[Streamed response]
+```
+
+## Failure Modes
+
+- CPU-side bottlenecks hidden by low GPU utilization.
+- NUMA mismatch between process, NIC, and GPU.
+- PCIe topology limiting multi-GPU communication.
+- Tokenization or post-processing blocking streaming.
+- Storage path slowing model load and warmup.
+

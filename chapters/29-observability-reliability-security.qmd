@@ -1,0 +1,43 @@
+# Observability, Reliability, and Security
+
+Production inference needs one integrated operating model. Observability,
+reliability, and security cannot be bolted on after the benchmark.
+
+## Chapter Job
+
+Define the production control surface for inference systems.
+
+## Observability
+
+- Request ID.
+- Model and runtime version.
+- Prompt template version.
+- Token counts.
+- Prefill and decode timing.
+- Queue time.
+- Retry count.
+- Output validity.
+- User or tenant class.
+
+## Reliability
+
+- Timeout policy.
+- Retry policy.
+- Circuit breakers.
+- Fallback models.
+- Queue limits.
+- Degradation modes.
+- Capacity reservations.
+- Incident drills.
+
+## Security
+
+- Input validation.
+- Prompt injection controls.
+- Tool permissions.
+- Tenant isolation.
+- Log redaction.
+- Secret handling.
+- Cache boundaries.
+- Vendor and region policy.
+

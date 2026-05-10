@@ -1,0 +1,40 @@
+# Runpod.ai Practical Deployment
+
+Runpod is the book's default on-demand GPU lab environment.
+
+## Chapter Job
+
+Give the reader a practical path to rent GPU capacity, launch a pod, run vLLM,
+and collect benchmark results.
+
+## Workflow
+
+- Choose a GPU based on model size and memory needs.
+- Start a pod with a suitable container image.
+- Attach persistent storage if needed.
+- Install or use a prebuilt vLLM environment.
+- Start the vLLM OpenAI-compatible server.
+- Expose the endpoint safely.
+- Run a benchmark from a client.
+- Save metrics and configuration.
+- Stop resources when done.
+
+## Operational Warnings
+
+- Track cost while experimenting.
+- Avoid exposing unauthenticated endpoints.
+- Record exact GPU, image, driver, CUDA, Python, and vLLM versions.
+- Treat ephemeral pods as disposable unless storage is explicitly configured.
+
+## Artifact
+
+A reproducible Runpod experiment card:
+
+- Pod type.
+- GPU.
+- Model.
+- Runtime command.
+- Benchmark command.
+- Results table.
+- Failure notes.
+

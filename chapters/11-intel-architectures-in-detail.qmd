@@ -1,0 +1,41 @@
+# Intel Architectures in Detail
+
+Intel matters in inference both as the CPU host architecture and as an
+accelerator ecosystem. This chapter receives deeper treatment than a simple
+vendor survey.
+
+## Chapter Job
+
+Explain Intel-relevant inference architecture from CPU features to accelerator
+placement, software stack, and deployment tradeoffs.
+
+## CPU-Side Topics
+
+- Xeon server CPU role in inference nodes.
+- NUMA topology and memory channels.
+- PCIe lanes and accelerator attachment.
+- AMX and CPU inference acceleration.
+- Host-side tokenization, scheduling, networking, and preprocessing.
+- CPU-only inference workloads and when they are reasonable.
+
+## Accelerator-Side Topics
+
+- Gaudi-class accelerator positioning.
+- HBM, on-package memory, and network fabric concepts.
+- Collective communication and scale-out implications.
+- Software stack and framework integration.
+- Precision support and compiler/runtime path.
+
+## What to Compare Against
+
+- NVIDIA GPU-based serving.
+- AMD GPU-based serving.
+- CPU-only serving.
+- Specialized dataflow or LPU-style systems.
+
+## Publication Note
+
+This chapter should be written from official Intel architecture sources,
+validated benchmark reports, and hands-on experiments. Treat secondary claims as
+leads, not facts.
+

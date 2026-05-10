@@ -1,0 +1,78 @@
+# Structure Review
+
+This appendix records the editorial logic of the book so the outline can be
+maintained as it grows.
+
+## Coherence Check
+
+The book now follows a physical-to-product progression:
+
+1. Data center constraints.
+2. Hardware and node architecture.
+3. Model mechanics.
+4. Kernels and runtimes.
+5. Framework-first implementation.
+6. Advanced architectures.
+7. Production engineering.
+
+This order prevents the reader from meeting advanced runtime choices before
+they understand the physical and architectural constraints those choices are
+trying to manage.
+
+## Narrative Progression
+
+The narrative moves from "where do tokens physically run?" to "how do we make
+that path measurable, fast, reliable, and cost-effective?"
+
+Each part should answer one question:
+
+- Data center: what physical envelope are we operating inside?
+- Hardware: what can the node and accelerator actually do?
+- Models: what work does the model impose on the system?
+- Kernels: what makes execution efficient?
+- Frameworks: how do we implement the concepts quickly?
+- Advanced systems: what changes at scale or with specialized architectures?
+- Production: how do we operate and improve the system safely?
+
+## Balance Check
+
+The current outline is intentionally broad but not evenly deep.
+
+Deep chapters:
+
+- Metrics.
+- CPU-GPU node architecture.
+- Intel architectures.
+- Attention and KV cache.
+- vLLM.
+- Benchmarking.
+- Speculative decoding.
+- Disaggregated inference.
+- Production observability and capacity planning.
+
+Survey chapters:
+
+- AMD architecture patterns until experiments are available.
+- Specialized systems until architecture claims are source-verified.
+- Kernel engineering beyond runtime-level literacy.
+- Modalities outside core LLM inference.
+
+## Readability Rule
+
+Every chapter should contain:
+
+- A concrete reader outcome.
+- A short system diagram, table, or decision matrix.
+- A practical artifact.
+- A "what to measure" section.
+- A "what can go wrong" section.
+
+## Missing Work
+
+- Source-verify vendor architecture claims.
+- Add citations and reference links.
+- Convert local journal experiments into polished labs.
+- Add runnable Runpod and vLLM scripts.
+- Add benchmark result templates.
+- Decide whether to merge or archive the older unused chapter stubs.
+

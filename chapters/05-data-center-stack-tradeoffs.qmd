@@ -1,0 +1,40 @@
+# Data Center Stack Tradeoffs
+
+This chapter turns the previous data center topics into decision matrices.
+
+## Chapter Job
+
+Give the reader a practical method for choosing a stack: cloud GPU rental,
+managed serverless GPUs, bare metal GPU clusters, specialized inference
+providers, or fully owned infrastructure.
+
+## Stack Options
+
+| Option | Strength | Cost or risk |
+| --- | --- | --- |
+| Managed API | Fastest product integration | Lowest infrastructure control |
+| GPU cloud instance | Good for experiments and medium control | Availability and price volatility |
+| Managed GPU platform | Faster deployment path | Platform constraints |
+| Bare metal cluster | Maximum control and stable utilization | Procurement and operations burden |
+| Specialized inference system | Strong fit for specific workload classes | Portability and ecosystem risk |
+
+## Decision Template
+
+Score each option across:
+
+- Time to first benchmark.
+- Time to production.
+- Hardware control.
+- Network control.
+- Runtime control.
+- Cost predictability.
+- Failure isolation.
+- Vendor lock-in.
+- Team skill required.
+
+## Bridge
+
+After the data center choices are visible, the book moves inward: what is inside
+the node, what matters in the accelerator, and which knobs are actually
+configurable by an inference engineer.
+

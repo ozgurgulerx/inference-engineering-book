@@ -1,0 +1,29 @@
+# Multi-GPU and Multi-Node Scaling
+
+Scaling inference is not just adding more GPUs. The communication pattern has to
+match the model and runtime.
+
+## Chapter Job
+
+Teach the scaling strategies that show up in real inference deployments.
+
+## Topics
+
+- Data parallel serving.
+- Tensor parallelism.
+- Pipeline parallelism.
+- Expert parallelism.
+- Sequence parallel and long-context variants.
+- NCCL and collectives.
+- Topology-aware placement.
+- Multi-node routing.
+- Failure domains.
+
+## Diagnostic Questions
+
+- Is the workload compute-bound, memory-bound, network-bound, or scheduler-bound?
+- Is the model too large for one accelerator?
+- Does parallelism improve latency, throughput, or only capacity?
+- Which link is in the critical path?
+- How does tail latency change at scale?
+
