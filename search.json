@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Inference Engineering",
+    "title": "Building an AI Data Center from Scratch",
     "section": "",
     "text": "1 Preface\nThis book takes a stack-first view. It starts with the physical data center, moves through hardware and model mechanics, then reaches kernels, serving frameworks, advanced architectures, and production operations.",
     "crumbs": [
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#reader",
     "href": "index.html#reader",
-    "title": "Inference Engineering",
+    "title": "Building an AI Data Center from Scratch",
     "section": "1.1 Reader",
     "text": "1.1 Reader\nThis book is for engineers, platform teams, applied AI builders, and technical leaders who need to operate LLM-backed systems in production.\nThe reader should be comfortable reading code, system diagrams, benchmark tables, and architecture notes. Prior experience with distributed systems, APIs, or machine learning helps, but the book should make each inference-specific concept explicit.",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#book-promise",
     "href": "index.html#book-promise",
-    "title": "Inference Engineering",
+    "title": "Building an AI Data Center from Scratch",
     "section": "1.2 Book Promise",
     "text": "1.2 Book Promise\nBy the end, a reader should be able to:\n\nCompare AI data center design choices across power, cooling, racks, networks, storage, and operations.\nExplain how CPU, GPU, accelerator, memory, and network architecture affect inference performance.\nBuild a metric system for latency, throughput, cost, quality, and reliability.\nUnderstand why attention, KV cache, long context, MoE, and RL-style workloads change serving behavior.\nRead kernel and compiler optimization claims without getting lost.\nDeploy and benchmark vLLM on an on-demand GPU environment such as Runpod.\nEvaluate speculative decoding, disaggregated inference, and specialized systems such as SambaNova, Cerebras, and Groq.\nOperate inference systems with evals, observability, reliability, security, and cost controls.",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#how-to-read",
     "href": "index.html#how-to-read",
-    "title": "Inference Engineering",
+    "title": "Building an AI Data Center from Scratch",
     "section": "1.3 How to Read",
     "text": "1.3 How to Read\nThe chapters are organized in seven layers:\n\nAI data center design.\nSilicon, nodes, and hardware architecture.\nModel mechanics that matter for inference.\nKernels, compilers, and runtime primitives.\nFramework-first implementation.\nAdvanced inference architectures.\nProduction inference engineering.\n\nEach chapter should eventually include:\n\nA concrete system, failure mode, benchmark, or decision.\nThe core mental model.\nImplementation notes.\nA lab, artifact, or checklist.\nWhat to measure.\nWhat can go wrong.\n\nThe goal is a book that progresses cleanly from physical constraints to operational judgment.",
     "crumbs": [
